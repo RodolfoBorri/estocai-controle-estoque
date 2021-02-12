@@ -1,12 +1,15 @@
 package com.uem.controle.estoque.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +35,9 @@ public class Produto {
 	@Column(name = "VALOR_TOTAL_ESTOQUE")
 	private BigDecimal valorTotalEstoque;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Movimentacao> movimentacoes;
+
 	public Produto(String nome, BigDecimal precoUnitario, String unidadeMedida, int quantidadeEstoque) {
 		super();
 		this.nome = nome;
@@ -42,6 +48,14 @@ public class Produto {
 	}
 	
 	public Produto() { }
+	
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
 	
 	public Long getId() {
 		return id;

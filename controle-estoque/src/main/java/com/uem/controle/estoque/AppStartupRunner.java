@@ -7,6 +7,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.uem.controle.estoque.builder.ProdutoBuilder;
 import com.uem.controle.estoque.controller.ProdutoController;
 import com.uem.controle.estoque.entity.Produto;
 
@@ -14,11 +15,17 @@ import com.uem.controle.estoque.entity.Produto;
 public class AppStartupRunner implements ApplicationRunner{
 
 	@Autowired
-	ProdutoController produtoController;
+	ProdutoController produtoController;  // remover 
 	
 	@Override
 	public void run(ApplicationArguments args) {
-		Produto produto = new Produto("nome", new BigDecimal(4000), "KG", 2); 
+		Produto produto = new ProdutoBuilder().setNome("Vini eh gay")
+											  .setPrecoUnitario(new BigDecimal(4000))
+											  .setUnidadeMedida("KG")
+											  .setQuantidadeEstoque(2)
+											  .build();
+		
+		
 		produtoController.cadastraProduto(produto);
 	}
 
