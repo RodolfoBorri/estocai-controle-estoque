@@ -7,6 +7,6 @@ public class ExceptionHandler extends Exception{
 	private static final long serialVersionUID = 1L;
 
 	public ExceptionHandler(ExceptionEnum exception, String variavel) {		
-		super(String.format(exception.getCodigo(), variavel));		
+		super(String.format(exception + " - " + exception.getCodigo(), variavel));		
 	}
 }

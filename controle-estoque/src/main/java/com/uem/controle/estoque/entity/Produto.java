@@ -32,7 +32,7 @@ public class Produto {
 	@Column(name = "QUANTIDADE_ESTOQUE", nullable = false)
 	private int quantidadeEstoque;
 	
-	@Column(name = "VALOR_TOTAL_ESTOQUE")
+	@Column(name = "VALOR_TOTAL_ESTOQUE", nullable = false)
 	private BigDecimal valorTotalEstoque;
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -46,8 +46,6 @@ public class Produto {
 		this.quantidadeEstoque = quantidadeEstoque;
 		this.valorTotalEstoque = precoUnitario.multiply(new BigDecimal(quantidadeEstoque));
 	}
-	
-	public Produto() { }
 	
 	public List<Movimentacao> getMovimentacoes() {
 		return movimentacoes;
