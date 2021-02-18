@@ -44,6 +44,7 @@ public class ProdutoView {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -54,7 +55,6 @@ public class ProdutoView {
 		});
 		frame.setBounds(100, 100, 494, 385);
 		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("XYZ COMERCIO DE PRODUTOS LTDA.");
