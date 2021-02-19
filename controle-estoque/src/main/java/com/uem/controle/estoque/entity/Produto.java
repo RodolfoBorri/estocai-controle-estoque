@@ -20,7 +20,7 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(length = 100, nullable = false)
+	@Column(nullable = false)
 	private String nome;
 	
 	@Column(name = "PRECO_UNITARIO", nullable = false)

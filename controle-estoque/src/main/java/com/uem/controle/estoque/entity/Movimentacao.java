@@ -19,10 +19,10 @@ public class Movimentacao {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name = "USUARIO_MOVIMENTACAO")
+	@Column(name = "USUARIO_MOVIMENTACAO", nullable = false)
 	private String usuarioMovimentacao;
 
-	@Column(name = "DATA_MOVIMENTACAO",nullable = false)
+	@Column(name = "DATA_MOVIMENTACAO", nullable = false)
 	private LocalDateTime dataMovimentacao;
 	
 	@ManyToOne

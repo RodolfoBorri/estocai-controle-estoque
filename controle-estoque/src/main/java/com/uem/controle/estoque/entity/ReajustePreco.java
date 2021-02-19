@@ -20,7 +20,7 @@ public class ReajustePreco {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name = "USUARIO_REAJUSTE")
+	@Column(name = "USUARIO_REAJUSTE", nullable = false)
 	private String usuarioMovimentacao;
 
 	@Column(name = "DATA_REAJUSTE", nullable = false)

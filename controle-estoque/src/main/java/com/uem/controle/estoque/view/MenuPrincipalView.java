@@ -60,6 +60,8 @@ public class MenuPrincipalView extends JPanel{
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
+		frame.setTitle("Estocaí - Sistema de controle de estoque");
 		frame.setBounds(100, 100, 727, 521);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
