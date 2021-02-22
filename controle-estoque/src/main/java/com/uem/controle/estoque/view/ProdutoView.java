@@ -1,37 +1,28 @@
 package com.uem.controle.estoque.view;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
 
 @Component
-public class ProdutoView extends JPanel{
+public class ProdutoView extends ViewBase{
 	
 	private static final long serialVersionUID = 1L;
 	
 	public JFrame frame;
 	private JLabel btnInclusaoProduto;
-
-	/**
-	 * Launch the application.
-	 */
 	
 	public static void run() {
 		try {
@@ -42,30 +33,31 @@ public class ProdutoView extends JPanel{
 		}
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public ProdutoView() {
 		this.setBorder(BorderFactory.createEmptyBorder(32, 32, 600, 1000));
 		initialize();
+		montaCabecalhoCompleto();
 	}
 	
-	@Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        Color color1 = new Color(104,130,252);
-        Color color2 = new Color(193,110,253);
-        int w = getWidth();
-        int h = getHeight();
-        GradientPaint gp = new GradientPaint(
-            0, 0, color1, 0, h, color2);
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, w, h);
-    }
+	private void montaCabecalhoCompleto() {
+		
+		this.add(montaComecoHeader());		
+		
+		this.add(montaContinuacaoHeader());
+		
+		this.add(montaTituloTela("CADASTRO DE PRODUTOS"));		
+	}
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				frame.dispose();
+				MenuPrincipalView menuPrincipalView = ApplicationContextProvider.getContext().getBean(MenuPrincipalView.class);
+				menuPrincipalView.frame.setVisible(true);
+			}
+		});
 		frame.setResizable(false);
 		frame.setTitle("Estocaí - Sistema de controle de estoque");
 		frame.setBounds(100, 100, 727, 521);
@@ -84,17 +76,17 @@ public class ProdutoView extends JPanel{
         btnInclusaoProduto.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnInclusaoProduto.setBackground(new Color(236, 178, 247));
-        		btnInclusaoProduto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnInclusaoProduto);
+
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnInclusaoProduto.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnInclusaoProduto);
             }
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				frame.dispose();
+				frame.setVisible(false);;
 				InclusaoProdutoView inclusaoProdutoView = ApplicationContextProvider.getContext().getBean(InclusaoProdutoView.class);				
 				inclusaoProdutoView.frame.setVisible(true);
 			}
@@ -112,12 +104,11 @@ public class ProdutoView extends JPanel{
 		btnProduto_1.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_1.setBackground(new Color(236, 178, 247));
-        		btnProduto_1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnProduto_1);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_1.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnProduto_1);
             }
         	
 			@Override
@@ -138,12 +129,11 @@ public class ProdutoView extends JPanel{
 		btnProduto_2.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_2.setBackground(new Color(236, 178, 247));
-        		btnProduto_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnProduto_2);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_2.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnProduto_2);
             }
         	
 			@Override
@@ -164,12 +154,11 @@ public class ProdutoView extends JPanel{
 		btnProduto_3.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_3.setBackground(new Color(236, 178, 247));
-        		btnProduto_3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnProduto_3);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_3.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnProduto_3);
             }
         	
 			@Override
@@ -180,24 +169,6 @@ public class ProdutoView extends JPanel{
 		this.add(btnProduto_3);
 		
 		frame.getContentPane().add(this);
-		
-		JLabel lblNewLabel = new JLabel("ESTOCAÍ COMERCIO DE PRODUTOS LTDA.");
-		lblNewLabel.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 20));
-		lblNewLabel.setBounds(155, 25, 388, 25);
-		add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("SISTEMA DE CONTROLE DE ESTOQUE");
-		lblNewLabel_1.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(180, 55, 388, 25);
-		add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("CADASTRO DE PRODUTOS");
-		lblNewLabel_2.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(280, 115, 388, 25);
-		add(lblNewLabel_2);
 	}
 
 }

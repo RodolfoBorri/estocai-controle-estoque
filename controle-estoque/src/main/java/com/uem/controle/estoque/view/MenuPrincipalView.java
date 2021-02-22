@@ -1,34 +1,26 @@
 package com.uem.controle.estoque.view;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
 
 @Component
-public class MenuPrincipalView extends JPanel{
+public class MenuPrincipalView extends ViewBase{
 	
 	private static final long serialVersionUID = 1L;
 	
 	public JFrame frame;
 	private JLabel btnProduto;
-
 		
 	public static void run() {
 		try {
@@ -42,22 +34,18 @@ public class MenuPrincipalView extends JPanel{
 	public MenuPrincipalView() {
 		this.setBorder(BorderFactory.createEmptyBorder(32, 32, 600, 1000));
 		initialize();
+		montaCabecalhoCompleto();
 	}
 	
-	@Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        Color color1 = new Color(104,130,252);
-        Color color2 = new Color(193,110,253);
-        int w = getWidth();
-        int h = getHeight();
-        GradientPaint gp = new GradientPaint(
-            0, 0, color1, 0, h, color2);
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, w, h);
-    }
-	
+	private void montaCabecalhoCompleto() {
+		
+		this.add(montaComecoHeader());		
+		
+		this.add(montaContinuacaoHeader());
+		
+		this.add(montaTituloTela("MENU PRINCIPAL"));		
+	}
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
@@ -78,17 +66,16 @@ public class MenuPrincipalView extends JPanel{
         btnProduto.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto.setBackground(new Color(236, 178, 247));
-        		btnProduto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnProduto);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnProduto);
             }
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				frame.dispose();
+				frame.setVisible(false);
 				ProdutoView produtoView = ApplicationContextProvider.getContext().getBean(ProdutoView.class);				
 				produtoView.frame.setVisible(true);
 			}
@@ -106,12 +93,11 @@ public class MenuPrincipalView extends JPanel{
 		btnProduto_1.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_1.setBackground(new Color(236, 178, 247));
-        		btnProduto_1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnProduto_1);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_1.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnProduto_1);
             }
         	
 			@Override
@@ -132,12 +118,11 @@ public class MenuPrincipalView extends JPanel{
 		btnProduto_2.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_2.setBackground(new Color(236, 178, 247));
-        		btnProduto_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnProduto_2);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_2.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnProduto_2);
             }
         	
 			@Override
@@ -158,12 +143,11 @@ public class MenuPrincipalView extends JPanel{
 		btnProduto_3.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_3.setBackground(new Color(236, 178, 247));
-        		btnProduto_3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        		mouseEnteredEvent(btnProduto_3);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_3.setBackground(UIManager.getColor("control"));
+            	mouseLeftEvent(btnProduto_3);
             }
         	
 			@Override
@@ -173,24 +157,6 @@ public class MenuPrincipalView extends JPanel{
 		});
 		this.add(btnProduto_3);
 		
-		frame.getContentPane().add(this);
-		
-		JLabel lblNewLabel = new JLabel("ESTOCAÍ COMERCIO DE PRODUTOS LTDA.");
-		lblNewLabel.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 20));
-		lblNewLabel.setBounds(155, 25, 388, 25);
-		add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("SISTEMA DE CONTROLE DE ESTOQUE");
-		lblNewLabel_1.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(180, 55, 388, 25);
-		add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("MENU PRINCIPAL");
-		lblNewLabel_2.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(280, 115, 388, 25);
-		add(lblNewLabel_2);
+		frame.getContentPane().add(this);					
 	}
 }

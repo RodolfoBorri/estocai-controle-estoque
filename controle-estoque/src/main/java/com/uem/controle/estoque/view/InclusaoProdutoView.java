@@ -3,19 +3,19 @@ package com.uem.controle.estoque.view;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.SystemColor;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -28,7 +28,7 @@ import com.uem.controle.estoque.controller.ProdutoController;
 import com.uem.controle.estoque.dto.ProdutoDTO;
 
 @Component
-public class InclusaoProdutoView extends JPanel{
+public class InclusaoProdutoView extends ViewBase{
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,29 +50,32 @@ public class InclusaoProdutoView extends JPanel{
 			e.printStackTrace();
 		}
 	}
-	
-	@Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        Color color1 = new Color(104,130,252);
-        Color color2 = new Color(193,110,253);
-        int w = getWidth();
-        int h = getHeight();
-        GradientPaint gp = new GradientPaint(
-            0, 0, color1, 0, h, color2);
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, w, h);
-    }
 
 	public InclusaoProdutoView() {
-		setForeground(Color.DARK_GRAY);
 		this.setBorder(BorderFactory.createEmptyBorder(32, 32, 600, 1000));
 		initialize();
+		montaCabecalhoCompleto();
+	}
+	
+	private void montaCabecalhoCompleto() {
+		
+		this.add(montaComecoHeader());		
+		
+		this.add(montaContinuacaoHeader());
+		
+		this.add(montaTituloTela("INCLUSÃO DE PRODUTO"));		
 	}
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				frame.dispose();
+				ProdutoView produtoView = ApplicationContextProvider.getContext().getBean(ProdutoView.class);
+				produtoView.frame.setVisible(true);
+			}
+		});
 		frame.setResizable(false);
 		frame.setTitle("Estocaí - Sistema de controle de estoque");
 		frame.setBounds(100, 100, 727, 521);
@@ -156,25 +159,7 @@ public class InclusaoProdutoView extends JPanel{
 		});
 		this.add(btnProduto_2);		
 		
-		frame.getContentPane().add(this);
-		
-		JLabel lblNewLabel = new JLabel("ESTOCAÍ COMERCIO DE PRODUTOS LTDA.");
-		lblNewLabel.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 20));
-		lblNewLabel.setBounds(155, 25, 388, 25);
-		add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("SISTEMA DE CONTROLE DE ESTOQUE");
-		lblNewLabel_1.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(180, 55, 388, 25);
-		add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("INCLUSÃO DE PRODUTO");
-		lblNewLabel_2.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(280, 115, 388, 25);
-		add(lblNewLabel_2);
+		frame.getContentPane().add(this);	
 		
 		JLabel lblNewLabel_3 = new JLabel("Nome: ");
 		lblNewLabel_3.setForeground(SystemColor.inactiveCaptionBorder);
@@ -212,6 +197,12 @@ public class InclusaoProdutoView extends JPanel{
 		textField1.setBounds(180, 206, 134, 40);
 		textField1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textField1.setColumns(10);
+		textField1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				atualizaValorTotal(textField3, textField1);
+			}
+		});
 		this.add(textField1);
 		
 		JSeparator separator1 = new JSeparator();
@@ -252,6 +243,12 @@ public class InclusaoProdutoView extends JPanel{
 		add(lblNewLabel_7);
 		
 		textField3 = new JTextField();
+		textField3.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				atualizaValorTotal(textField3, textField1);
+			}
+		});
 		textField3.setCaretColor(new Color(240, 242, 245));
 		textField3.setBorder(null);
 		textField3.setOpaque(false);
@@ -287,7 +284,7 @@ public class InclusaoProdutoView extends JPanel{
 		JSeparator separator4 = new JSeparator();
 		separator4.setBounds(180, 395, 134, 2);
 		add(separator4);
-	}
+	}	
 	
 	private String validaInsercao(ProdutoDTO produtoDto) {
 		return produtoController.validaInsercao(produtoDto); 
