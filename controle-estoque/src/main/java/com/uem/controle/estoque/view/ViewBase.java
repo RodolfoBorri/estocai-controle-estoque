@@ -7,6 +7,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.SystemColor;
+import java.math.BigDecimal;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,10 +34,10 @@ public class ViewBase extends JPanel {
 	
 	protected String atualizaValorTotal(JTextField textFieldQuantidade, JTextField textFieldPreco) {
 		try {
-			int quantidade = Integer.parseInt(textFieldQuantidade.getText());
-			int preco = Integer.parseInt(textFieldPreco.getText());
+			BigDecimal quantidade = new BigDecimal(textFieldQuantidade.getText());
+			BigDecimal preco = new BigDecimal(textFieldPreco.getText());
 			
-			Integer valorTotal = quantidade * preco;
+			BigDecimal valorTotal = preco.multiply(quantidade);
 			
 			return valorTotal.toString();
 		}

@@ -30,13 +30,15 @@ public class Produto {
 	private String unidadeMedida;
 	
 	@Column(name = "QUANTIDADE_ESTOQUE", nullable = false)
-	private int quantidadeEstoque;
+	private Integer quantidadeEstoque;
 	
 	@Column(name = "VALOR_TOTAL_ESTOQUE", nullable = false)
 	private BigDecimal valorTotalEstoque;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Movimentacao> movimentacoes;
+	
+	public Produto() { }
 
 	public Produto(String nome, BigDecimal precoUnitario, String unidadeMedida, int quantidadeEstoque) {
 		super();
@@ -80,13 +82,16 @@ public class Produto {
 	public void setUnidadeMedida(String unidadeMedida) {
 		this.unidadeMedida = unidadeMedida;
 	}
-	public int getQuantidadeEstoque() {
+	public Integer getQuantidadeEstoque() {
 		return quantidadeEstoque;
 	}
-	public void setQuantidadeEstoque(int quantidadeEstoque) {
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	public BigDecimal getValorTotalEstoque() {
 		return valorTotalEstoque;
+	}
+	public void setValorTotalEstoque(BigDecimal valorTotalEstoque) {
+		this.valorTotalEstoque = valorTotalEstoque;
 	}
 }

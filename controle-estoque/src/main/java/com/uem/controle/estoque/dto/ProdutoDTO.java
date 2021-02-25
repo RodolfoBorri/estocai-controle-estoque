@@ -11,6 +11,16 @@ public class ProdutoDTO {
 	private String unidadeMedida;
 
 	private int quantidadeEstoque;
+	
+	private BigDecimal valorTotalEstoque;
+
+	public BigDecimal getValorTotalEstoque() {
+		return valorTotalEstoque;
+	}
+
+	public void setValorTotalEstoque(BigDecimal valorTotalEstoque) {
+		this.valorTotalEstoque = valorTotalEstoque;
+	}
 
 	public String getNome() {
 		return nome;
@@ -43,15 +53,17 @@ public class ProdutoDTO {
 	public void setQuantidadeEstoque(int quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
-
-	public ProdutoDTO(String nome, BigDecimal precoUnitario, String unidadeMedida, int quantidadeEstoque) {
+	
+	public ProdutoDTO(String nome, BigDecimal precoUnitario, String unidadeMedida, int quantidadeEstoque,
+			BigDecimal valorTotalEstoque) {
 		super();
 		this.nome = nome;
 		this.precoUnitario = precoUnitario;
 		this.unidadeMedida = unidadeMedida;
 		this.quantidadeEstoque = quantidadeEstoque;
+		this.valorTotalEstoque = valorTotalEstoque;
 	}
-	
+
 	public ProdutoDTO() { }
 
 }

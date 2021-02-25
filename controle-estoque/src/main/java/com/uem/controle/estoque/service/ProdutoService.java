@@ -15,6 +15,9 @@ import com.uem.controle.estoque.repository.ProdutoRepository;
 @Service
 public class ProdutoService {
 	
+	private final String FLUXO_INCLUSAO = "Inclusao";
+	private final String FLUXO_ALTERACAO = "Alteracao";
+	
 	@Autowired
 	ProdutoRepository produtoRepository;
 	
@@ -101,16 +104,50 @@ public class ProdutoService {
 		return retorno;
 	}
 	
-
-	public String validaInsercao(ProdutoDTO produtoDto) {
-		StringBuilder errors = new StringBuilder();
+	public String validaCamposProduto(ProdutoDTO produtoDto, String fluxo) {
+		StringBuilder errors = new StringBuilder("");
 		
-		errors.append(validaCadastroNome(produtoDto).equals("") ? "" : validaCadastroNome(produtoDto) + "\n");
-		errors.append(validaCadastroPreco(produtoDto).equals("") ? "" : validaCadastroPreco(produtoDto) + "\n");
-		errors.append(validaCadastroUnidade(produtoDto).equals("") ? "" : validaCadastroUnidade(produtoDto) + "\n");
-		errors.append(validaCadastroQuantidade(produtoDto).equals("") ? "" : validaCadastroQuantidade(produtoDto) + "\n");
+		if(fluxo.equalsIgnoreCase(FLUXO_INCLUSAO.toString())) {
+			
+			errors.append(validaCadastroNome(produtoDto).equals("") ? "" : validaCadastroNome(produtoDto) + "\n");
+			errors.append(validaCadastroPreco(produtoDto).equals("") ? "" : validaCadastroPreco(produtoDto) + "\n");
+			errors.append(validaCadastroUnidade(produtoDto).equals("") ? "" : validaCadastroUnidade(produtoDto) + "\n");
+			errors.append(validaCadastroQuantidade(produtoDto).equals("") ? "" : validaCadastroQuantidade(produtoDto) + "\n");
+		}
+		else if(fluxo.equalsIgnoreCase(FLUXO_ALTERACAO.toString())) {
+			
+			errors.append(validaCadastroPreco(produtoDto).equals("") ? "" : validaCadastroPreco(produtoDto) + "\n");
+			errors.append(validaCadastroUnidade(produtoDto).equals("") ? "" : validaCadastroUnidade(produtoDto) + "\n");
+			errors.append(validaCadastroQuantidade(produtoDto).equals("") ? "" : validaCadastroQuantidade(produtoDto) + "\n");
+		}
 		
 		return errors.toString();
 	}
-	
+
+	public Produto buscaProdutoPorNome(String nome) throws ExceptionHandler {
+		return produtoRepository.findByNome(nome).orElseThrow(() -> new ExceptionHandler(ExceptionEnum.CE_7, nome)); 
+	}
+
+	public void exclui(ProdutoDTO produtoDto) {
+		try {
+			Produto produto = produtoRepository.findByNome(produtoDto.getNome()).get();
+			produtoRepository.delete(produto);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void altera(ProdutoDTO produtoDto) {
+		Produto produtoOrigem = produtoRepository.findByNome(produtoDto.getNome()).get();
+		preencheVariaveisAlteracao(produtoOrigem, produtoDto);
+		produtoRepository.save(produtoOrigem);
+	}
+
+	private void preencheVariaveisAlteracao(Produto produtoOrigem, ProdutoDTO produtoDto) {
+		produtoOrigem.setPreco(produtoDto.getPrecoUnitario());
+		produtoOrigem.setQuantidadeEstoque(produtoDto.getQuantidadeEstoque());
+		produtoOrigem.setUnidadeMedida(produtoDto.getUnidadeMedida());
+		produtoOrigem.setValorTotalEstoque(produtoDto.getValorTotalEstoque());
+	}	
 }

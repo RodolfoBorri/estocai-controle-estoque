@@ -12,11 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
 
 @Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ProdutoView extends ViewBase{
 	
 	private static final long serialVersionUID = 1L;
@@ -86,7 +89,7 @@ public class ProdutoView extends ViewBase{
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				frame.setVisible(false);;
+				frame.setVisible(false);
 				InclusaoProdutoView inclusaoProdutoView = ApplicationContextProvider.getContext().getBean(InclusaoProdutoView.class);				
 				inclusaoProdutoView.frame.setVisible(true);
 			}
@@ -113,7 +116,9 @@ public class ProdutoView extends ViewBase{
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO
+				frame.setVisible(false);
+				AlteracaoProdutoView alteracaoProdutoView = ApplicationContextProvider.getContext().getBean(AlteracaoProdutoView.class);				
+				alteracaoProdutoView.frame.setVisible(true);				
 			}
 		});
 		this.add(btnProduto_1);
@@ -138,7 +143,9 @@ public class ProdutoView extends ViewBase{
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO
+				frame.setVisible(false);
+				ConsultaProdutoView consultaProdutoView = ApplicationContextProvider.getContext().getBean(ConsultaProdutoView.class);				
+				consultaProdutoView .frame.setVisible(true);		
 			}
 		});
 		this.add(btnProduto_2);
@@ -163,7 +170,9 @@ public class ProdutoView extends ViewBase{
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO
+				frame.setVisible(false);
+				ExclusaoProdutoView exclusaoProdutoView = ApplicationContextProvider.getContext().getBean(ExclusaoProdutoView.class);				
+				exclusaoProdutoView.frame.setVisible(true);
 			}
 		});
 		this.add(btnProduto_3);

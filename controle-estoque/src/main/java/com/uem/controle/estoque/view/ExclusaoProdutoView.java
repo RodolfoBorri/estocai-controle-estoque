@@ -28,45 +28,65 @@ import org.springframework.stereotype.Component;
 import com.uem.controle.estoque.ApplicationContextProvider;
 import com.uem.controle.estoque.controller.ProdutoController;
 import com.uem.controle.estoque.dto.ProdutoDTO;
+import com.uem.controle.estoque.entity.Produto;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class InclusaoProdutoView extends ViewBase {
+public class ExclusaoProdutoView extends ViewBase {
 
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	ProdutoController produtoController;
-	
+
 	public JFrame frame;
 	private JTextField textField;
 	private JTextField textField1;
 	private JTextField textField2;
 	private JTextField textField3;
 	private JTextField textField4;
-		
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JLabel lblNewLabel_6;
+	private JLabel lblNewLabel_7;
+	private JLabel lblNewLabel_8;
+	private JLabel lblNewLabel_9;
+	private JLabel btnProduto_3;
+	private JSeparator separator1;
+	private JSeparator separator2;
+	private JSeparator separator3;
+	private JSeparator separator4;
+	
 	public static void run() {
 		try {
-			InclusaoProdutoView window = new InclusaoProdutoView();
+			ExclusaoProdutoView window = new ExclusaoProdutoView();
 			window.frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public InclusaoProdutoView() {
+	public ExclusaoProdutoView() {
 		this.setBorder(BorderFactory.createEmptyBorder(32, 32, 600, 1000));
 		initialize();
 		montaCabecalhoCompleto();
+		mudaEdicaoCampos(false);
 	}
-	
+
+	private void mudaEdicaoCampos(boolean podeEditar) {		//Muda-se a edição do campo conforme for realizar a busca
+		textField2.setEditable(false);
+		textField3.setEditable(false);
+		textField4.setEditable(false);
+	}
+
 	private void montaCabecalhoCompleto() {
-		
-		this.add(montaComecoHeader());		
-		
+
+		this.add(montaComecoHeader());
+
 		this.add(montaContinuacaoHeader());
-		
-		this.add(montaTituloTela("INCLUSÃO DE PRODUTO"));		
+
+		this.add(montaTituloTela("EXCLUSÃO DE PRODUTO"));
 	}
 
 	private void initialize() {
@@ -84,10 +104,10 @@ public class InclusaoProdutoView extends ViewBase {
 		frame.setBounds(100, 100, 727, 521);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setLayout(null);		
+		this.setLayout(null);
 
-		JLabel btnProduto_3 = new JLabel();
-		btnProduto_3.setText("Cadastrar");
+		btnProduto_3 = new JLabel();
+		btnProduto_3.setText("Excluir");
 		btnProduto_3.setOpaque(true);
 		btnProduto_3.setHorizontalAlignment(SwingConstants.CENTER);
 		btnProduto_3.setForeground(Color.DARK_GRAY);
@@ -95,65 +115,57 @@ public class InclusaoProdutoView extends ViewBase {
 		btnProduto_3.setBackground(Color.WHITE);
 		btnProduto_3.setBounds(58, 430, 256, 31);
 		btnProduto_3.addMouseListener(new MouseAdapter() {
-        	
-        	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_3.setBackground(new Color(54, 209, 80));
-        		btnProduto_3.setForeground(Color.WHITE);
-        		btnProduto_3.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_3.setBackground(Color.WHITE);
-        		btnProduto_3.setForeground(Color.DARK_GRAY);
-            }
-        	
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnProduto_3.setBackground(new Color(54, 209, 80));
+				btnProduto_3.setForeground(Color.WHITE);
+				btnProduto_3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnProduto_3.setBackground(Color.WHITE);
+				btnProduto_3.setForeground(Color.DARK_GRAY);
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ProdutoDTO produtoDto = converteCamposParaDto();
-				String errors = new String("");				
-				errors = validaInsercao(produtoDto);
 				
-				if(errors.equals("")) {
-					int result = JOptionPane.showConfirmDialog(frame,
-				            "Deseja confirmar a inclusão ?", "Confirmação de inclusão",
-				            JOptionPane.YES_NO_OPTION);
-					
-				        if (result == JOptionPane.YES_OPTION) {
-				          produtoController.cadastraProduto(produtoDto);
-				          JOptionPane.showMessageDialog(null, "Produto Cadastrado com sucesso!", 
-				        		  "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-				        }
-				        else if (result == JOptionPane.NO_OPTION)
-				          frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, errors, "ERROS", JOptionPane.WARNING_MESSAGE);
-				}
+				int result = JOptionPane.showConfirmDialog(frame, "Deseja confirmar a exclusão ?",
+						"Confirmação de exclusão", JOptionPane.YES_NO_OPTION);
+
+				if (result == JOptionPane.YES_OPTION) {
+					produtoController.exclui(produtoDto); 
+					JOptionPane.showMessageDialog(null, "Produto Excluído com sucesso!", "SUCESSO",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else if (result == JOptionPane.NO_OPTION)
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				 
 			}
 		});
 		this.add(btnProduto_3);
-		
+
 		JLabel btnProduto_2 = new JLabel();
 		btnProduto_2.setText("Cancelar");
-		btnProduto_2.setOpaque(true);		
+		btnProduto_2.setOpaque(true);
 		btnProduto_2.setHorizontalAlignment(SwingConstants.CENTER);
 		btnProduto_2.setForeground(Color.DARK_GRAY);
 		btnProduto_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
 		btnProduto_2.setBackground(Color.WHITE);
 		btnProduto_2.setBounds(410, 430, 256, 31);
 		btnProduto_2.addMouseListener(new MouseAdapter() {
-        	
-        	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		btnProduto_2.setBackground(new Color(224, 63, 63));
-        		btnProduto_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        		btnProduto_2.setForeground(Color.WHITE);
-            }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-            	btnProduto_2.setBackground(Color.WHITE);
-        		btnProduto_2.setForeground(Color.DARK_GRAY);
-            }
-        	
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnProduto_2.setBackground(new Color(224, 63, 63));
+				btnProduto_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btnProduto_2.setForeground(Color.WHITE);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnProduto_2.setBackground(Color.WHITE);
+				btnProduto_2.setForeground(Color.DARK_GRAY);
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				frame.setVisible(false);
@@ -161,17 +173,17 @@ public class InclusaoProdutoView extends ViewBase {
 				produtoView.frame.setVisible(true);
 			}
 		});
-		this.add(btnProduto_2);		
-		
+		this.add(btnProduto_2);
+
 		frame.getContentPane().add(this);
-		
-		JLabel lblNewLabel_3 = new JLabel("Nome: ");
+
+		lblNewLabel_3 = new JLabel("Nome: ");
 		lblNewLabel_3.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblNewLabel_3.setBounds(115, 166, 59, 25);
 		add(lblNewLabel_3);
-		
-		textField = new JTextField();
+
+		textField = new JTextField("");
 		textField.setCaretColor(new Color(240, 242, 245));
 		textField.setBorder(null);
 		textField.setOpaque(false);
@@ -181,18 +193,19 @@ public class InclusaoProdutoView extends ViewBase {
 		textField.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textField.setColumns(10);
 		this.add(textField);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(180, 189, 369, 2);
 		add(separator);
-		
-		JLabel lblNewLabel_4 = new JLabel("Preço: ");
+
+		lblNewLabel_4 = new JLabel("Preço: ");
 		lblNewLabel_4.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(115, 216, 59, 25);
 		add(lblNewLabel_4);
-		
-		textField1 = new JTextField();
+
+		textField1 = new JTextField("");
+		textField1.setEnabled(false);
 		textField1.setCaretColor(new Color(240, 242, 245));
 		textField1.setBorder(null);
 		textField1.setOpaque(false);
@@ -208,24 +221,24 @@ public class InclusaoProdutoView extends ViewBase {
 			}
 		});
 		this.add(textField1);
-		
-		JSeparator separator1 = new JSeparator();
+
+		separator1 = new JSeparator();
 		separator1.setBounds(180, 239, 134, 2);
 		add(separator1);
-		
-		JLabel lblNewLabel_5 = new JLabel("R$: ");
+
+		lblNewLabel_5 = new JLabel("R$: ");
 		lblNewLabel_5.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_5.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
 		lblNewLabel_5.setBounds(166, 219, 16, 25);
 		add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_6 = new JLabel("Unidade: ");
+
+		lblNewLabel_6 = new JLabel("Unidade: ");
 		lblNewLabel_6.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_6.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblNewLabel_6.setBounds(96, 268, 78, 25);
 		add(lblNewLabel_6);
-		
-		textField2 = new JTextField();
+
+		textField2 = new JTextField("");
 		textField2.setCaretColor(new Color(240, 242, 245));
 		textField2.setBorder(null);
 		textField2.setOpaque(false);
@@ -234,19 +247,19 @@ public class InclusaoProdutoView extends ViewBase {
 		textField2.setBounds(180, 258, 134, 40);
 		textField2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textField2.setColumns(10);
-		this.add(textField2);		
-		
-		JSeparator separator2 = new JSeparator();
+		this.add(textField2);
+
+		separator2 = new JSeparator();
 		separator2.setBounds(180, 291, 134, 2);
-		add(separator2);		
-		
-		JLabel lblNewLabel_7 = new JLabel("Quantidade: ");
+		add(separator2);
+
+		lblNewLabel_7 = new JLabel("Quantidade: ");
 		lblNewLabel_7.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_7.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblNewLabel_7.setBounds(78, 320, 96, 25);
 		add(lblNewLabel_7);
-		
-		textField3 = new JTextField();
+
+		textField3 = new JTextField("");
 		textField3.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -262,49 +275,103 @@ public class InclusaoProdutoView extends ViewBase {
 		textField3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textField3.setColumns(10);
 		this.add(textField3);
-		
-		JSeparator separator3 = new JSeparator();
-		separator3.setBounds(180, 343, 134, 2);
+
+		separator3 = new JSeparator();
+		separator3.setBounds(180, 343, 134, 2);		
 		add(separator3);
-		
-		JLabel lblNewLabel_8 = new JLabel("Valor Total: ");
+
+		lblNewLabel_8 = new JLabel("Valor Total: ");
 		lblNewLabel_8.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_8.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblNewLabel_8.setBounds(78, 372, 96, 25);
 		add(lblNewLabel_8);
 		
-		JLabel lblNewLabel_9 = new JLabel("R$: ");
+		lblNewLabel_9 = new JLabel("R$: ");
 		lblNewLabel_9.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_9.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
 		lblNewLabel_9.setBounds(166, 375, 16, 25);
 		add(lblNewLabel_9);
-		
-		textField4 = new JTextField();
+
+		textField4 = new JTextField("");
 		textField4.setCaretColor(new Color(240, 242, 245));
 		textField4.setBorder(null);
 		textField4.setOpaque(false);
 		textField4.setEditable(false);
 		textField4.setForeground(new Color(240, 242, 245));
 		textField4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField4.setBounds(180, 362, 134, 40);
+		textField4.setBounds(180, 362, 134, 31);
 		textField4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textField4.setColumns(10);
 		this.add(textField4);
-		
-		JSeparator separator4 = new JSeparator();
+
+		separator4 = new JSeparator();
 		separator4.setBounds(180, 395, 134, 2);
 		add(separator4);
-	}	
-	
-	private String validaInsercao(ProdutoDTO produtoDto) {
-		return produtoController.validaCamposProduto(produtoDto, "Inclusao"); 
-	}	
+
+		JLabel btnProduto_4 = new JLabel();
+		btnProduto_4.setText("Buscar");
+		btnProduto_4.setOpaque(true);
+		btnProduto_4.setHorizontalAlignment(SwingConstants.CENTER);
+		btnProduto_4.setForeground(Color.DARK_GRAY);
+		btnProduto_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnProduto_4.setBackground(Color.WHITE);
+		btnProduto_4.setBounds(584, 162, 111, 31);
+		btnProduto_4.addMouseListener(new MouseAdapter() {
+
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnProduto_4.setBackground(new Color(54, 209, 80));
+				btnProduto_4.setForeground(Color.WHITE);
+				btnProduto_4.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnProduto_4.setBackground(Color.WHITE);
+				btnProduto_4.setForeground(Color.DARK_GRAY);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buscaProduto();			
+			}
+		});
+
+		add(btnProduto_4);
+	}
+
+	private void buscaProduto() {
+		try {
+			String nomeProduto = textField.getText();
+			Produto produto = produtoController.buscaProdutoPorNome(nomeProduto);
+			preencheCamposProdutoTela(produto);
+			mudaEdicaoCampos(true);
+		}
+		catch(Exception ex)
+		{
+			esvaziaCamposProdutoTela();
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO!", JOptionPane.WARNING_MESSAGE);
+			mudaEdicaoCampos(false);
+		}
+	}
+
+	private void esvaziaCamposProdutoTela() {
+		textField1.setText("");
+		textField2.setText("");
+		textField3.setText("");
+		textField4.setText("");
+	}
+
+	private void preencheCamposProdutoTela(Produto produto) {
+		textField1.setText(produto.getPreco().toString());
+		textField2.setText(produto.getUnidadeMedida());
+		textField3.setText(produto.getQuantidadeEstoque().toString());
+		textField4.setText(produto.getValorTotalEstoque().toString());
+	}
 	
 	private ProdutoDTO converteCamposParaDto() {
 		String nome, unidade;
 		int quantidade;
 		BigDecimal preco, valorTotalEstoque;
-		
+
 		try {
 			nome = textField.getText();
 			preco = new BigDecimal(textField1.getText());
@@ -312,8 +379,8 @@ public class InclusaoProdutoView extends ViewBase {
 			quantidade = Integer.parseInt(textField3.getText());
 			valorTotalEstoque = preco.multiply(new BigDecimal(quantidade));
 			return new ProdutoDTO(nome, preco, unidade, quantidade, valorTotalEstoque);
-		}
-		catch(Exception e) {			
+			
+		} catch (Exception e) {
 			return new ProdutoDTO("", new BigDecimal("0"), "", -1, new BigDecimal("0"));
 		}
 	}
