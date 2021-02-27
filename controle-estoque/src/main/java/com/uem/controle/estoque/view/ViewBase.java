@@ -18,6 +18,9 @@ public class ViewBase extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
+	private final String SOMA = "Soma";
+	private final String SUBTRACAO = "Subtracao";
+	
 	@Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -31,6 +34,37 @@ public class ViewBase extends JPanel {
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, w, h);
     }
+	
+	protected String atualizaQuantidadeTotalMovimentacao(JTextField textFieldQuantidadeAtual, JTextField textFieldQuantidadeEntrada, String operacao) {
+		
+		int quantidadeEntrada, quantidadeAtual;
+		Integer quantidadeTotal = 0;
+		
+		try {
+			
+			if(SOMA.equals(operacao)) {
+				
+				quantidadeAtual = Integer.parseInt(textFieldQuantidadeAtual.getText());
+				quantidadeEntrada = Integer.parseInt(textFieldQuantidadeEntrada.getText());
+				
+				quantidadeTotal = quantidadeAtual + quantidadeEntrada;
+				
+				return quantidadeTotal.toString();	
+			}
+			
+			if(SUBTRACAO.equals(operacao)) {
+				quantidadeAtual = Integer.parseInt(textFieldQuantidadeAtual.getText());
+				quantidadeEntrada = Integer.parseInt(textFieldQuantidadeEntrada.getText());
+				
+				quantidadeTotal = quantidadeAtual - quantidadeEntrada;
+			}
+			
+			return quantidadeTotal.toString();
+		}
+		catch(Exception e) {
+			return "";
+		}		
+	}
 	
 	protected String atualizaValorTotal(JTextField textFieldQuantidade, JTextField textFieldPreco) {
 		try {

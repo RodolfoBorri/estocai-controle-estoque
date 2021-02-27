@@ -13,6 +13,9 @@ import javax.swing.SwingConstants;
 import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
+import com.uem.controle.estoque.view.movimentacao.MovimentacaoView;
+import com.uem.controle.estoque.view.produto.ProdutoView;
+import com.uem.controle.estoque.view.reajuste.ReajustePrecoView;
 
 @Component
 public class MenuPrincipalView extends ViewBase{
@@ -102,7 +105,10 @@ public class MenuPrincipalView extends ViewBase{
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO
+				frame.setVisible(false);
+				MovimentacaoView movimentacaoView = ApplicationContextProvider.getContext().getBean(MovimentacaoView.class);				
+				movimentacaoView.frame.setVisible(true);
+				
 			}
 		});
 		this.add(btnProduto_1);
@@ -127,7 +133,9 @@ public class MenuPrincipalView extends ViewBase{
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO
+				frame.setVisible(false);
+				ReajustePrecoView reajustePrecoView = ApplicationContextProvider.getContext().getBean(ReajustePrecoView.class);				
+				reajustePrecoView.frame.setVisible(true);				
 			}
 		});
 		this.add(btnProduto_2);

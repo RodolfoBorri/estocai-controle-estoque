@@ -26,8 +26,8 @@ public class ReajustePreco {
 	@Column(name = "DATA_REAJUSTE", nullable = false)
 	private LocalDateTime dataMovimentacao;
 	
-	@Column(name = "TIPO_ALTERACAO", nullable = false)
-	private String tipoAlteracao;
+	@Column(name = "TIPO_REAJUSTE", nullable = false)
+	private String tipoReajuste;
 	
 	@Column(name = "PERCENTUAL_REAJUSTE", nullable = false)
 	private BigDecimal percentualReajuste;
@@ -38,12 +38,12 @@ public class ReajustePreco {
 
 	public ReajustePreco() { }
 
-	public ReajustePreco(String usuarioMovimentacao, String tipoAlteracao, BigDecimal percentualReajuste,
+	public ReajustePreco(String usuarioMovimentacao, String tipoReajuste, BigDecimal percentualReajuste,
 			Produto produto) {
 		super();
 		this.dataMovimentacao = LocalDateTime.now();
 		this.usuarioMovimentacao = usuarioMovimentacao;
-		this.tipoAlteracao = tipoAlteracao;
+		this.tipoReajuste = tipoReajuste;
 		this.percentualReajuste = percentualReajuste;
 		this.produto = produto;
 	}
@@ -73,11 +73,11 @@ public class ReajustePreco {
 	}
 
 	public String getTipoAlteracao() {
-		return tipoAlteracao;
+		return tipoReajuste;
 	}
 
-	public void setTipoAlteracao(String tipoAlteracao) {
-		this.tipoAlteracao = tipoAlteracao;
+	public void setTipoAlteracao(String tipoReajuste) {
+		this.tipoReajuste = tipoReajuste;
 	}
 
 	public BigDecimal getPercentualReajuste() {

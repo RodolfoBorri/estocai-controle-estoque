@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.uem.controle.estoque.dto.ProdutoDTO;
-import com.uem.controle.estoque.entity.Produto;
 import com.uem.controle.estoque.exception.ExceptionHandler;
 import com.uem.controle.estoque.service.ProdutoService;
 
@@ -22,7 +21,7 @@ public class ProdutoController extends ControllerBase{
 		return produtoService.validaCamposProduto(produtoDto, fluxo);		
 	}
 	
-	public Produto buscaProdutoPorNome(String nome) throws ExceptionHandler {
+	public ProdutoDTO buscaProdutoPorNome(String nome) throws ExceptionHandler {
 		return produtoService.buscaProdutoPorNome(nome);
 	}
 

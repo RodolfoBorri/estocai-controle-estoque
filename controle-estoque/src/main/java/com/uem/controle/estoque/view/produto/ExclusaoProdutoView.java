@@ -1,4 +1,4 @@
-package com.uem.controle.estoque.view;
+package com.uem.controle.estoque.view.produto;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -26,11 +27,12 @@ import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
 import com.uem.controle.estoque.controller.ProdutoController;
-import com.uem.controle.estoque.entity.Produto;
+import com.uem.controle.estoque.dto.ProdutoDTO;
+import com.uem.controle.estoque.view.ViewBase;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ConsultaProdutoView extends ViewBase {
+public class ExclusaoProdutoView extends ViewBase {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +52,7 @@ public class ConsultaProdutoView extends ViewBase {
 	private JLabel lblNewLabel_7;
 	private JLabel lblNewLabel_8;
 	private JLabel lblNewLabel_9;
+	private JLabel btnProduto_3;
 	private JSeparator separator1;
 	private JSeparator separator2;
 	private JSeparator separator3;
@@ -57,14 +60,14 @@ public class ConsultaProdutoView extends ViewBase {
 	
 	public static void run() {
 		try {
-			ConsultaProdutoView window = new ConsultaProdutoView();
+			ExclusaoProdutoView window = new ExclusaoProdutoView();
 			window.frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public ConsultaProdutoView() {
+	public ExclusaoProdutoView() {
 		this.setBorder(BorderFactory.createEmptyBorder(32, 32, 600, 1000));
 		initialize();
 		montaCabecalhoCompleto();
@@ -83,7 +86,7 @@ public class ConsultaProdutoView extends ViewBase {
 
 		this.add(montaContinuacaoHeader());
 
-		this.add(montaTituloTela("CONSULTA DE PRODUTO"));
+		this.add(montaTituloTela("EXCLUSÃO DE PRODUTO"));
 	}
 
 	private void initialize() {
@@ -103,34 +106,44 @@ public class ConsultaProdutoView extends ViewBase {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
 
-		JLabel btnProduto_4 = new JLabel();
-		btnProduto_4.setText("Buscar");
-		btnProduto_4.setOpaque(true);
-		btnProduto_4.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_4.setForeground(Color.DARK_GRAY);
-		btnProduto_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_4.setBackground(Color.WHITE);
-		btnProduto_4.setBounds(584, 162, 111, 31);
-		btnProduto_4.addMouseListener(new MouseAdapter() {
+		btnProduto_3 = new JLabel();
+		btnProduto_3.setText("Excluir");
+		btnProduto_3.setOpaque(true);
+		btnProduto_3.setHorizontalAlignment(SwingConstants.CENTER);
+		btnProduto_3.setForeground(Color.DARK_GRAY);
+		btnProduto_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnProduto_3.setBackground(Color.WHITE);
+		btnProduto_3.setBounds(58, 430, 256, 31);
+		btnProduto_3.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnProduto_4.setBackground(new Color(54, 209, 80));
-				btnProduto_4.setForeground(Color.WHITE);
-				btnProduto_4.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btnProduto_3.setBackground(new Color(54, 209, 80));
+				btnProduto_3.setForeground(Color.WHITE);
+				btnProduto_3.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnProduto_4.setBackground(Color.WHITE);
-				btnProduto_4.setForeground(Color.DARK_GRAY);
+				btnProduto_3.setBackground(Color.WHITE);
+				btnProduto_3.setForeground(Color.DARK_GRAY);
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				buscaProduto();			
+				ProdutoDTO produtoDto = converteCamposParaDto();
+				
+				int result = JOptionPane.showConfirmDialog(frame, "Deseja confirmar a exclusão ?",
+						"Confirmação de exclusão", JOptionPane.YES_NO_OPTION);
+
+				if (result == JOptionPane.YES_OPTION) {
+					produtoController.exclui(produtoDto); 
+					JOptionPane.showMessageDialog(null, "Produto Excluído com sucesso!", "SUCESSO",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else if (result == JOptionPane.NO_OPTION)
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				 
 			}
 		});
-
-		add(btnProduto_4);
+		this.add(btnProduto_3);
 
 		JLabel btnProduto_2 = new JLabel();
 		btnProduto_2.setText("Cancelar");
@@ -293,13 +306,42 @@ public class ConsultaProdutoView extends ViewBase {
 
 		separator4 = new JSeparator();
 		separator4.setBounds(180, 395, 134, 2);
-		add(separator4);		
+		add(separator4);
+
+		JLabel btnProduto_4 = new JLabel();
+		btnProduto_4.setText("Buscar");
+		btnProduto_4.setOpaque(true);
+		btnProduto_4.setHorizontalAlignment(SwingConstants.CENTER);
+		btnProduto_4.setForeground(Color.DARK_GRAY);
+		btnProduto_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnProduto_4.setBackground(Color.WHITE);
+		btnProduto_4.setBounds(584, 162, 111, 31);
+		btnProduto_4.addMouseListener(new MouseAdapter() {
+
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnProduto_4.setBackground(new Color(54, 209, 80));
+				btnProduto_4.setForeground(Color.WHITE);
+				btnProduto_4.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnProduto_4.setBackground(Color.WHITE);
+				btnProduto_4.setForeground(Color.DARK_GRAY);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buscaProduto();			
+			}
+		});
+
+		add(btnProduto_4);
 	}
-	
+
 	private void buscaProduto() {
 		try {
 			String nomeProduto = textField.getText();
-			Produto produto = produtoController.buscaProdutoPorNome(nomeProduto);
+			ProdutoDTO produto = produtoController.buscaProdutoPorNome(nomeProduto);
 			preencheCamposProdutoTela(produto);
 			mudaEdicaoCampos(true);
 		}
@@ -318,10 +360,28 @@ public class ConsultaProdutoView extends ViewBase {
 		textField4.setText("");
 	}
 
-	private void preencheCamposProdutoTela(Produto produto) {
-		textField1.setText(produto.getPreco().toString());
+	private void preencheCamposProdutoTela(ProdutoDTO produto) {
+		textField1.setText(produto.getPrecoUnitario().toString());
 		textField2.setText(produto.getUnidadeMedida());
 		textField3.setText(produto.getQuantidadeEstoque().toString());
 		textField4.setText(produto.getValorTotalEstoque().toString());
+	}
+	
+	private ProdutoDTO converteCamposParaDto() {
+		String nome, unidade;
+		int quantidade;
+		BigDecimal preco, valorTotalEstoque;
+
+		try {
+			nome = textField.getText();
+			preco = new BigDecimal(textField1.getText());
+			unidade = textField2.getText();
+			quantidade = Integer.parseInt(textField3.getText());
+			valorTotalEstoque = preco.multiply(new BigDecimal(quantidade));
+			return new ProdutoDTO(nome, preco, unidade, quantidade, valorTotalEstoque);
+			
+		} catch (Exception e) {
+			return new ProdutoDTO("", new BigDecimal("0"), "", -1, new BigDecimal("0"));
+		}
 	}
 }

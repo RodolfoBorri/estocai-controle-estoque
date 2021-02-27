@@ -1,11 +1,13 @@
 package com.uem.controle.estoque.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.uem.controle.estoque.builder.ProdutoBuilder;
 import com.uem.controle.estoque.dto.ProdutoDTO;
 import com.uem.controle.estoque.entity.Produto;
 import com.uem.controle.estoque.enumerator.ExceptionEnum;
@@ -17,6 +19,8 @@ public class ProdutoService {
 	
 	private final String FLUXO_INCLUSAO = "Inclusao";
 	private final String FLUXO_ALTERACAO = "Alteracao";
+	private final String FLUXO_ENTRADA = "E";
+	private final String FLUXO_SAIDA = "S";
 	
 	@Autowired
 	ProdutoRepository produtoRepository;
@@ -33,8 +37,24 @@ public class ProdutoService {
 	}
 
 	private Produto dtoParaEntidade(ProdutoDTO produtoDto) {
-		return new Produto(produtoDto.getNome(), produtoDto.getPrecoUnitario(), 
-				produtoDto.getUnidadeMedida(), produtoDto.getQuantidadeEstoque());
+		Produto produto = new ProdutoBuilder().setNome(produtoDto.getNome())
+											  .setPrecoUnitario(produtoDto.getPrecoUnitario())
+											  .setQuantidadeEstoque(produtoDto.getQuantidadeEstoque())
+											  .setUnidadeMedida(produtoDto.getUnidadeMedida())
+											  .build();
+		return produto;
+	}
+	
+	private ProdutoDTO entidadeParaDto(Produto produto) {
+		ProdutoDTO produtoDto = new ProdutoDTO();
+		
+		produtoDto.setNome(produto.getNome());
+		produtoDto.setPrecoUnitario(produto.getPreco());
+		produtoDto.setQuantidadeEstoque(produto.getQuantidadeEstoque());
+		produtoDto.setUnidadeMedida(produto.getUnidadeMedida());
+		produtoDto.setValorTotalEstoque(produto.getValorTotalEstoque());
+		
+		return produtoDto;
 	}
 
 	private String validaCadastroNome(ProdutoDTO produtoDto) {
@@ -124,7 +144,12 @@ public class ProdutoService {
 		return errors.toString();
 	}
 
-	public Produto buscaProdutoPorNome(String nome) throws ExceptionHandler {
+	public ProdutoDTO buscaProdutoPorNome(String nome) throws ExceptionHandler {
+		Produto produto = produtoRepository.findByNome(nome).orElseThrow(() -> new ExceptionHandler(ExceptionEnum.CE_7, nome));
+		return entidadeParaDto(produto);
+	}
+	
+	public Produto buscaEntidadeProduto(String nome) throws ExceptionHandler {
 		return produtoRepository.findByNome(nome).orElseThrow(() -> new ExceptionHandler(ExceptionEnum.CE_7, nome)); 
 	}
 
@@ -149,5 +174,35 @@ public class ProdutoService {
 		produtoOrigem.setQuantidadeEstoque(produtoDto.getQuantidadeEstoque());
 		produtoOrigem.setUnidadeMedida(produtoDto.getUnidadeMedida());
 		produtoOrigem.setValorTotalEstoque(produtoDto.getValorTotalEstoque());
+	}
+
+	public void realizaMovimentacao(ProdutoDTO produtoDto, Integer quantidade, String tipoAlteracao) {
+		Produto produtoOrigem = produtoRepository.findByNome(produtoDto.getNome()).get();
+		
+		if(FLUXO_ENTRADA.equals(tipoAlteracao)) 
+			produtoDto.setQuantidadeEstoque(produtoDto.getQuantidadeEstoque() + quantidade);			
+		
+		else if(FLUXO_SAIDA.equals(tipoAlteracao)) 
+			produtoDto.setQuantidadeEstoque(produtoDto.getQuantidadeEstoque() - quantidade);
+		
+		produtoDto.setValorTotalEstoque(produtoDto.getPrecoUnitario().multiply(new BigDecimal(produtoDto.getQuantidadeEstoque())));
+		preencheVariaveisAlteracao(produtoOrigem, produtoDto);
+		produtoRepository.save(produtoOrigem);
+	}
+
+	public void realizaReajuste(BigDecimal porcentagem) {
+		List<Produto> produtos = produtoRepository.findAll();
+		
+		for(Produto produto : produtos) {
+			BigDecimal precoOriginal = produto.getPreco();
+			BigDecimal precoMultiplicado = produto.getPreco().multiply(porcentagem);
+			BigDecimal precoAtualizado = precoOriginal.add(precoMultiplicado);
+			BigDecimal quantidadeEmEstoque = new BigDecimal(produto.getQuantidadeEstoque());
+
+			produto.setValorTotalEstoque(precoAtualizado.multiply(quantidadeEmEstoque));
+			produto.setPreco(precoAtualizado);
+			
+			produtoRepository.save(produto);
+		}
 	}	
 }

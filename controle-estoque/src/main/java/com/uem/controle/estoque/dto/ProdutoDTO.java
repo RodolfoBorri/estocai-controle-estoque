@@ -10,7 +10,7 @@ public class ProdutoDTO {
 
 	private String unidadeMedida;
 
-	private int quantidadeEstoque;
+	private Integer quantidadeEstoque;
 	
 	private BigDecimal valorTotalEstoque;
 
@@ -46,11 +46,11 @@ public class ProdutoDTO {
 		this.unidadeMedida = unidadeMedida;
 	}
 
-	public int getQuantidadeEstoque() {
+	public Integer getQuantidadeEstoque() {
 		return quantidadeEstoque;
 	}
 
-	public void setQuantidadeEstoque(int quantidadeEstoque) {
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	

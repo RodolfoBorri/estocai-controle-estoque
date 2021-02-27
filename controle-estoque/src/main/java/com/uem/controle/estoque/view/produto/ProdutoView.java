@@ -1,4 +1,4 @@
-package com.uem.controle.estoque.view;
+package com.uem.controle.estoque.view.produto;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +17,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
+import com.uem.controle.estoque.view.MenuPrincipalView;
+import com.uem.controle.estoque.view.ViewBase;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
