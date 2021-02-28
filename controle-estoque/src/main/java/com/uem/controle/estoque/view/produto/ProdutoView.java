@@ -98,22 +98,22 @@ public class ProdutoView extends ViewBase{
 		});
         this.add(btnInclusaoProduto);                
 		
-		JLabel btnProduto_1 = new JLabel();
-		btnProduto_1.setText("Alteração");
-		btnProduto_1.setOpaque(true);
-		btnProduto_1.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_1.setForeground(Color.DARK_GRAY);
-		btnProduto_1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_1.setBackground(Color.WHITE);
-		btnProduto_1.setBounds(121, 249, 458, 31);
-		btnProduto_1.addMouseListener(new MouseAdapter() {
+		JLabel btnAlteracaoProduto = new JLabel();
+		btnAlteracaoProduto.setText("Alteração");
+		btnAlteracaoProduto.setOpaque(true);
+		btnAlteracaoProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		btnAlteracaoProduto.setForeground(Color.DARK_GRAY);
+		btnAlteracaoProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnAlteracaoProduto.setBackground(Color.WHITE);
+		btnAlteracaoProduto.setBounds(121, 249, 458, 31);
+		btnAlteracaoProduto.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		mouseEnteredEvent(btnProduto_1);
+        		mouseEnteredEvent(btnAlteracaoProduto);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	mouseLeftEvent(btnProduto_1);
+            	mouseLeftEvent(btnAlteracaoProduto);
             }
         	
 			@Override
@@ -123,24 +123,24 @@ public class ProdutoView extends ViewBase{
 				alteracaoProdutoView.frame.setVisible(true);				
 			}
 		});
-		this.add(btnProduto_1);
+		this.add(btnAlteracaoProduto);
 		
-		JLabel btnProduto_2 = new JLabel();
-		btnProduto_2.setText("Consulta");
-		btnProduto_2.setOpaque(true);
-		btnProduto_2.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_2.setForeground(Color.DARK_GRAY);
-		btnProduto_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_2.setBackground(Color.WHITE);
-		btnProduto_2.setBounds(121, 311, 458, 31);
-		btnProduto_2.addMouseListener(new MouseAdapter() {
+		JLabel btnConsultaProduto = new JLabel();
+		btnConsultaProduto.setText("Consulta");
+		btnConsultaProduto.setOpaque(true);
+		btnConsultaProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		btnConsultaProduto.setForeground(Color.DARK_GRAY);
+		btnConsultaProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnConsultaProduto.setBackground(Color.WHITE);
+		btnConsultaProduto.setBounds(121, 311, 458, 31);
+		btnConsultaProduto.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		mouseEnteredEvent(btnProduto_2);
+        		mouseEnteredEvent(btnConsultaProduto);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	mouseLeftEvent(btnProduto_2);
+            	mouseLeftEvent(btnConsultaProduto);
             }
         	
 			@Override
@@ -150,24 +150,24 @@ public class ProdutoView extends ViewBase{
 				consultaProdutoView .frame.setVisible(true);		
 			}
 		});
-		this.add(btnProduto_2);
+		this.add(btnConsultaProduto);
 		
-		JLabel btnProduto_3 = new JLabel();
-		btnProduto_3.setText("Exclusão");
-		btnProduto_3.setOpaque(true);
-		btnProduto_3.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_3.setForeground(Color.DARK_GRAY);
-		btnProduto_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_3.setBackground(Color.WHITE);
-		btnProduto_3.setBounds(121, 374, 458, 31);
-		btnProduto_3.addMouseListener(new MouseAdapter() {
+		JLabel btnExclusaoProduto = new JLabel();
+		btnExclusaoProduto.setText("Exclusão");
+		btnExclusaoProduto.setOpaque(true);
+		btnExclusaoProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		btnExclusaoProduto.setForeground(Color.DARK_GRAY);
+		btnExclusaoProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnExclusaoProduto.setBackground(Color.WHITE);
+		btnExclusaoProduto.setBounds(121, 374, 458, 31);
+		btnExclusaoProduto.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		mouseEnteredEvent(btnProduto_3);
+        		mouseEnteredEvent(btnExclusaoProduto);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	mouseLeftEvent(btnProduto_3);
+            	mouseLeftEvent(btnExclusaoProduto);
             }
         	
 			@Override
@@ -177,7 +177,7 @@ public class ProdutoView extends ViewBase{
 				exclusaoProdutoView.frame.setVisible(true);
 			}
 		});
-		this.add(btnProduto_3);
+		this.add(btnExclusaoProduto);
 		
 		frame.getContentPane().add(this);
 	}

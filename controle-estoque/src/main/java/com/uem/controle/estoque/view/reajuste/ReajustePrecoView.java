@@ -48,23 +48,23 @@ public class ReajustePrecoView extends ViewBase {
 
 	public JFrame frame;
 	private ButtonGroup bg; 
-	private JTextField textField;
-	private JTextField textField1;
-	private JTextField textField2;
-	private JTextField textField3;
-	private JLabel btnProduto_4;
-	private JLabel lblNewLabel_3;
-	private JLabel lblNewLabel_4;
-	private JLabel lblNewLabel_6;
-	private JLabel lblNewLabel_7;
-	private JLabel btnProduto_3;
+	private JTextField textFieldProduto;
+	private JTextField textFieldUnidade;
+	private JTextField textFieldPrecoAtual;
+	private JTextField textFieldPercentual;
+	private JLabel btnBuscaProduto;
+	private JLabel lblProduto;
+	private JLabel lblUnidade;
+	private JLabel lblPrecoAtual;
+	private JLabel lblPercentualReajuste;
+	private JLabel btnConfirmar;
 	private JSeparator separator1;
 	private JSeparator separator2;
 	private JSeparator separator3;
-	private JRadioButton rdbtnNewRadioButton;
+	private JRadioButton rdbtnPorProduto;
 	private JRadioButton rdbtnGeral;
 	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
+	private JLabel lblPercentual;
 	
 	public static void run() {
 		try {
@@ -83,22 +83,22 @@ public class ReajustePrecoView extends ViewBase {
 	}
 	
 	private void mudaEdicaoCampos(boolean podeEditar) {
-		lblNewLabel_3.setEnabled(podeEditar);
-		lblNewLabel_4.setEnabled(podeEditar);
-		lblNewLabel_6.setEnabled(podeEditar);
-		textField.setEnabled(podeEditar);
-		textField1.setEnabled(podeEditar);
-		textField2.setEnabled(podeEditar);
-		btnProduto_4.setEnabled(podeEditar);
+		lblProduto.setEnabled(podeEditar);
+		lblUnidade.setEnabled(podeEditar);
+		lblPrecoAtual.setEnabled(podeEditar);
+		textFieldProduto.setEnabled(podeEditar);
+		textFieldUnidade.setEnabled(podeEditar);
+		textFieldPrecoAtual.setEnabled(podeEditar);
+		btnBuscaProduto.setEnabled(podeEditar);
 		lblNewLabel.setEnabled(podeEditar);
 		
 		if(podeEditar) {
-			btnProduto_4.setForeground(Color.DARK_GRAY);
-			btnProduto_4.setBackground(Color.WHITE);
+			btnBuscaProduto.setForeground(Color.DARK_GRAY);
+			btnBuscaProduto.setBackground(Color.WHITE);
 		}
 		else {
-			btnProduto_4.setBackground(new Color(97,98,98));
-			btnProduto_4.setForeground(Color.WHITE);
+			btnBuscaProduto.setBackground(new Color(97,98,98));
+			btnBuscaProduto.setForeground(Color.WHITE);
 		}
 
 	}
@@ -129,25 +129,25 @@ public class ReajustePrecoView extends ViewBase {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
 
-		btnProduto_3 = new JLabel();
-		btnProduto_3.setText("Confirmar");
-		btnProduto_3.setOpaque(true);
-		btnProduto_3.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_3.setForeground(Color.DARK_GRAY);
-		btnProduto_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_3.setBackground(Color.WHITE);
-		btnProduto_3.setBounds(58, 430, 256, 31);
-		btnProduto_3.addMouseListener(new MouseAdapter() {
+		btnConfirmar = new JLabel();
+		btnConfirmar.setText("Confirmar");
+		btnConfirmar.setOpaque(true);
+		btnConfirmar.setHorizontalAlignment(SwingConstants.CENTER);
+		btnConfirmar.setForeground(Color.DARK_GRAY);
+		btnConfirmar.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnConfirmar.setBackground(Color.WHITE);
+		btnConfirmar.setBounds(58, 430, 256, 31);
+		btnConfirmar.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnProduto_3.setBackground(new Color(54, 209, 80));
-				btnProduto_3.setForeground(Color.WHITE);
-				btnProduto_3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btnConfirmar.setBackground(new Color(54, 209, 80));
+				btnConfirmar.setForeground(Color.WHITE);
+				btnConfirmar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnProduto_3.setBackground(Color.WHITE);
-				btnProduto_3.setForeground(Color.DARK_GRAY);
+				btnConfirmar.setBackground(Color.WHITE);
+				btnConfirmar.setForeground(Color.DARK_GRAY);
 			}
 
 			@Override
@@ -174,27 +174,27 @@ public class ReajustePrecoView extends ViewBase {
 				}
 			}
 		});
-		this.add(btnProduto_3);
+		this.add(btnConfirmar);
 
-		JLabel btnProduto_2 = new JLabel();
-		btnProduto_2.setText("Cancelar");
-		btnProduto_2.setOpaque(true);
-		btnProduto_2.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_2.setForeground(Color.DARK_GRAY);
-		btnProduto_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_2.setBackground(Color.WHITE);
-		btnProduto_2.setBounds(410, 430, 256, 31);
-		btnProduto_2.addMouseListener(new MouseAdapter() {
+		JLabel btnCancelar = new JLabel();
+		btnCancelar.setText("Cancelar");
+		btnCancelar.setOpaque(true);
+		btnCancelar.setHorizontalAlignment(SwingConstants.CENTER);
+		btnCancelar.setForeground(Color.DARK_GRAY);
+		btnCancelar.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnCancelar.setBackground(Color.WHITE);
+		btnCancelar.setBounds(410, 430, 256, 31);
+		btnCancelar.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnProduto_2.setBackground(new Color(224, 63, 63));
-				btnProduto_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				btnProduto_2.setForeground(Color.WHITE);
+				btnCancelar.setBackground(new Color(224, 63, 63));
+				btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btnCancelar.setForeground(Color.WHITE);
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnProduto_2.setBackground(Color.WHITE);
-				btnProduto_2.setForeground(Color.DARK_GRAY);
+				btnCancelar.setBackground(Color.WHITE);
+				btnCancelar.setForeground(Color.DARK_GRAY);
 			}
 
 			@Override
@@ -204,116 +204,116 @@ public class ReajustePrecoView extends ViewBase {
 				menuPrincipalView .frame.setVisible(true);
 			}
 		});
-		this.add(btnProduto_2);
+		this.add(btnCancelar);
 
 		frame.getContentPane().add(this);
 
-		lblNewLabel_3 = new JLabel("Produto: ");
-		lblNewLabel_3.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(111, 221, 63, 25);
-		this.add(lblNewLabel_3);
+		lblProduto = new JLabel("Produto: ");
+		lblProduto.setForeground(SystemColor.inactiveCaptionBorder);
+		lblProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblProduto.setBounds(111, 221, 63, 25);
+		this.add(lblProduto);
 
-		textField = new JTextField("");
-		textField.setCaretColor(new Color(240, 242, 245));
-		textField.setBorder(null);
-		textField.setOpaque(false);
-		textField.setForeground(new Color(240, 242, 245));
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField.setBounds(180, 211, 369, 40);
-		textField.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField.setColumns(10);
-		this.add(textField);
+		textFieldProduto = new JTextField("");
+		textFieldProduto.setCaretColor(new Color(240, 242, 245));
+		textFieldProduto.setBorder(null);
+		textFieldProduto.setOpaque(false);
+		textFieldProduto.setForeground(new Color(240, 242, 245));
+		textFieldProduto.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldProduto.setBounds(180, 211, 369, 40);
+		textFieldProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldProduto.setColumns(10);
+		this.add(textFieldProduto);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(180, 244, 369, 2);
 		this.add(separator);
 
-		lblNewLabel_4 = new JLabel("Unidade:");
-		lblNewLabel_4.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(111, 271, 63, 25);
-		this.add(lblNewLabel_4);
+		lblUnidade = new JLabel("Unidade:");
+		lblUnidade.setForeground(SystemColor.inactiveCaptionBorder);
+		lblUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblUnidade.setBounds(111, 271, 63, 25);
+		this.add(lblUnidade);
 
-		textField1 = new JTextField("");
-		textField1.setCaretColor(new Color(240, 242, 245));
-		textField1.setBorder(null);
-		textField1.setOpaque(false);
-		textField1.setForeground(new Color(240, 242, 245));
-		textField1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField1.setBounds(180, 261, 134, 40);
-		textField1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField1.setColumns(10);
-		this.add(textField1);
+		textFieldUnidade = new JTextField("");
+		textFieldUnidade.setCaretColor(new Color(240, 242, 245));
+		textFieldUnidade.setBorder(null);
+		textFieldUnidade.setOpaque(false);
+		textFieldUnidade.setForeground(new Color(240, 242, 245));
+		textFieldUnidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldUnidade.setBounds(180, 261, 134, 40);
+		textFieldUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldUnidade.setColumns(10);
+		this.add(textFieldUnidade);
 
 		separator1 = new JSeparator();
 		separator1.setBounds(180, 294, 134, 2);
 		this.add(separator1);
 
-		lblNewLabel_6 = new JLabel("Preço Atual:");
-		lblNewLabel_6.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_6.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_6.setBounds(80, 323, 94, 25);
-		this.add(lblNewLabel_6);
+		lblPrecoAtual = new JLabel("Preço Atual:");
+		lblPrecoAtual.setForeground(SystemColor.inactiveCaptionBorder);
+		lblPrecoAtual.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblPrecoAtual.setBounds(80, 323, 94, 25);
+		this.add(lblPrecoAtual);
 
-		textField2 = new JTextField("");		
-		textField2.setCaretColor(new Color(240, 242, 245));
-		textField2.setBorder(null);
-		textField2.setOpaque(false);
-		textField2.setForeground(new Color(240, 242, 245));
-		textField2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField2.setBounds(180, 313, 134, 40);
-		textField2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField2.setColumns(10);
-		this.add(textField2);
+		textFieldPrecoAtual = new JTextField("");		
+		textFieldPrecoAtual.setCaretColor(new Color(240, 242, 245));
+		textFieldPrecoAtual.setBorder(null);
+		textFieldPrecoAtual.setOpaque(false);
+		textFieldPrecoAtual.setForeground(new Color(240, 242, 245));
+		textFieldPrecoAtual.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldPrecoAtual.setBounds(180, 313, 134, 40);
+		textFieldPrecoAtual.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldPrecoAtual.setColumns(10);
+		this.add(textFieldPrecoAtual);
 
 		separator2 = new JSeparator();
 		separator2.setBounds(180, 346, 134, 2);
 		this.add(separator2);
 
-		lblNewLabel_7 = new JLabel("Percentual de Reajuste:");
-		lblNewLabel_7.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_7.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_7.setBounds(10, 376, 164, 25);
-		this.add(lblNewLabel_7);
+		lblPercentualReajuste = new JLabel("Percentual de Reajuste:");
+		lblPercentualReajuste.setForeground(SystemColor.inactiveCaptionBorder);
+		lblPercentualReajuste.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblPercentualReajuste.setBounds(10, 376, 164, 25);
+		this.add(lblPercentualReajuste);
 
-		textField3 = new JTextField("");
-		textField3.setCaretColor(new Color(240, 242, 245));
-		textField3.setBorder(null);
-		textField3.setOpaque(false);
-		textField3.setForeground(new Color(240, 242, 245));
-		textField3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField3.setBounds(180, 365, 48, 40);
-		textField3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField3.setColumns(10);
-		this.add(textField3);
+		textFieldPercentual = new JTextField("");
+		textFieldPercentual.setCaretColor(new Color(240, 242, 245));
+		textFieldPercentual.setBorder(null);
+		textFieldPercentual.setOpaque(false);
+		textFieldPercentual.setForeground(new Color(240, 242, 245));
+		textFieldPercentual.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldPercentual.setBounds(180, 365, 48, 40);
+		textFieldPercentual.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldPercentual.setColumns(10);
+		this.add(textFieldPercentual);
 
 		separator3 = new JSeparator();
 		separator3.setBounds(180, 399, 48, 2);		
 		this.add(separator3);
 		
-		btnProduto_4 = new JLabel();
-		btnProduto_4.setText("Buscar");
-		btnProduto_4.setOpaque(true);
-		btnProduto_4.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_4.setForeground(Color.DARK_GRAY);
-		btnProduto_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_4.setBackground(Color.WHITE);
-		btnProduto_4.setBounds(584, 217, 111, 31);
-		btnProduto_4.addMouseListener(new MouseAdapter() {
+		btnBuscaProduto = new JLabel();
+		btnBuscaProduto.setText("Buscar");
+		btnBuscaProduto.setOpaque(true);
+		btnBuscaProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		btnBuscaProduto.setForeground(Color.DARK_GRAY);
+		btnBuscaProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnBuscaProduto.setBackground(Color.WHITE);
+		btnBuscaProduto.setBounds(584, 217, 111, 31);
+		btnBuscaProduto.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				if(rdbtnNewRadioButton.isSelected()) {
-					btnProduto_4.setBackground(new Color(54, 209, 80));
-					btnProduto_4.setForeground(Color.WHITE);
-					btnProduto_4.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				if(rdbtnPorProduto.isSelected()) {
+					btnBuscaProduto.setBackground(new Color(54, 209, 80));
+					btnBuscaProduto.setForeground(Color.WHITE);
+					btnBuscaProduto.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				if(rdbtnNewRadioButton.isSelected()) {
-					btnProduto_4.setBackground(Color.WHITE);
-					btnProduto_4.setForeground(Color.DARK_GRAY);
+				if(rdbtnPorProduto.isSelected()) {
+					btnBuscaProduto.setBackground(Color.WHITE);
+					btnBuscaProduto.setForeground(Color.DARK_GRAY);
 				}
 			}
 
@@ -323,27 +323,27 @@ public class ReajustePrecoView extends ViewBase {
 			}
 		});
 
-		this.add(btnProduto_4);
+		this.add(btnBuscaProduto);
 		
-		rdbtnNewRadioButton = new JRadioButton("Por Produto");
-		rdbtnNewRadioButton.setSelected(true);
-		rdbtnNewRadioButton.addMouseListener(new MouseAdapter() {
+		rdbtnPorProduto = new JRadioButton("Por Produto");
+		rdbtnPorProduto.setSelected(true);
+		rdbtnPorProduto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mudaEdicaoCampos(true);
 			}
 		});
-		rdbtnNewRadioButton.setOpaque(false);
-		rdbtnNewRadioButton.setFont((new Font("Leelawadee UI Semilight", Font.PLAIN, 12)));
-		rdbtnNewRadioButton.setBounds(181, 173, 109, 23);
-		rdbtnNewRadioButton.setForeground(new Color(240, 242, 245));
-		this.add(rdbtnNewRadioButton);
+		rdbtnPorProduto.setOpaque(false);
+		rdbtnPorProduto.setFont((new Font("Leelawadee UI Semilight", Font.PLAIN, 12)));
+		rdbtnPorProduto.setBounds(181, 173, 109, 23);
+		rdbtnPorProduto.setForeground(new Color(240, 242, 245));
+		this.add(rdbtnPorProduto);
 		
-		JLabel lblNewLabel_7_1 = new JLabel("Tipo de Reajuste:");
-		lblNewLabel_7_1.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_7_1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_7_1.setBounds(57, 171, 117, 25);
-		this.add(lblNewLabel_7_1);
+		JLabel lblTipoReajuste = new JLabel("Tipo de Reajuste:");
+		lblTipoReajuste.setForeground(SystemColor.inactiveCaptionBorder);
+		lblTipoReajuste.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblTipoReajuste.setBounds(57, 171, 117, 25);
+		this.add(lblTipoReajuste);
 		
 		rdbtnGeral = new JRadioButton("Geral");
 		rdbtnGeral.addMouseListener(new MouseAdapter() {
@@ -359,7 +359,7 @@ public class ReajustePrecoView extends ViewBase {
 		this.add(rdbtnGeral);
 		
 		bg = new ButtonGroup();
-		bg.add(rdbtnNewRadioButton);
+		bg.add(rdbtnPorProduto);
 		bg.add(rdbtnGeral); 
 		
 		lblNewLabel = new JLabel("R$: ");
@@ -368,11 +368,11 @@ public class ReajustePrecoView extends ViewBase {
 		lblNewLabel.setBounds(167, 329, 16, 25);
 		add(lblNewLabel);
 		
-		lblNewLabel_1 = new JLabel("%");
-		lblNewLabel_1.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
-		lblNewLabel_1.setBounds(171, 383, 16, 25);
-		add(lblNewLabel_1);
+		lblPercentual = new JLabel("%");
+		lblPercentual.setForeground(SystemColor.inactiveCaptionBorder);
+		lblPercentual.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
+		lblPercentual.setBounds(171, 383, 16, 25);
+		add(lblPercentual);
 	}
 	
 	private String validaReajuste(ReajustePrecoDTO reajusteDto) {
@@ -384,13 +384,13 @@ public class ReajustePrecoView extends ViewBase {
 		try {	
 			String usuarioReajuste = "";
 			String tipoReajuste = "";
-			String nomeProduto = textField.getText();
+			String nomeProduto = textFieldProduto.getText();
 			
 			ProdutoDTO produtoDto = new ProdutoDTO();
 			
-			Integer percentualReajuste = Integer.parseInt(textField3.getText());
+			Integer percentualReajuste = Integer.parseInt(textFieldPercentual.getText());
 			
-			if(rdbtnNewRadioButton.isSelected()) {
+			if(rdbtnPorProduto.isSelected()) {
 				tipoReajuste = "P";
 				produtoDto = buscaProduto(nomeProduto);
 			}
@@ -410,7 +410,7 @@ public class ReajustePrecoView extends ViewBase {
 
 	private void buscaProdutoEPreencheTela() {
 		try {
-			String nomeProduto = textField.getText();
+			String nomeProduto = textFieldProduto.getText();
 			ProdutoDTO produtoDto = buscaProduto(nomeProduto);
 			preencheCamposTela(produtoDto);
 		}
@@ -426,15 +426,15 @@ public class ReajustePrecoView extends ViewBase {
 	}
 
 	private void preencheCamposTela(ProdutoDTO produtoDto) {
-		textField.setText(produtoDto.getNome());
-		textField1.setText(produtoDto.getUnidadeMedida().toString());
-		textField2.setText(produtoDto.getPrecoUnitario().toString());
+		textFieldProduto.setText(produtoDto.getNome());
+		textFieldUnidade.setText(produtoDto.getUnidadeMedida().toString());
+		textFieldPrecoAtual.setText(produtoDto.getPrecoUnitario().toString());
 	}
 
 	private void esvaziaCamposProdutoTela() {
-		textField.setText("");
-		textField1.setText("");
-		textField2.setText("");
-		textField3.setText("");
+		textFieldProduto.setText("");
+		textFieldUnidade.setText("");
+		textFieldPrecoAtual.setText("");
+		textFieldPercentual.setText("");
 	}
 }

@@ -39,18 +39,18 @@ public class ConsultaProdutoView extends ViewBase {
 	ProdutoController produtoController;
 
 	public JFrame frame;
-	private JTextField textField;
-	private JTextField textField1;
-	private JTextField textField2;
-	private JTextField textField3;
-	private JTextField textField4;
-	private JLabel lblNewLabel_3;
-	private JLabel lblNewLabel_4;
-	private JLabel lblNewLabel_5;
-	private JLabel lblNewLabel_6;
-	private JLabel lblNewLabel_7;
-	private JLabel lblNewLabel_8;
-	private JLabel lblNewLabel_9;
+	private JTextField textFieldNome;
+	private JTextField textFieldPreco;
+	private JTextField textFieldUnidade;
+	private JTextField textFieldQuantidade;
+	private JTextField textFieldValorTotal;
+	private JLabel lblNome;
+	private JLabel lblPreco;
+	private JLabel lblCifrao2;
+	private JLabel lblUnidade;
+	private JLabel lblQuantidade;
+	private JLabel lblValorTotal;
+	private JLabel lblCifrao;
 	private JSeparator separator1;
 	private JSeparator separator2;
 	private JSeparator separator3;
@@ -73,9 +73,9 @@ public class ConsultaProdutoView extends ViewBase {
 	}
 
 	private void mudaEdicaoCampos(boolean podeEditar) {		//Muda-se a edição do campo conforme for realizar a busca
-		textField2.setEditable(false);
-		textField3.setEditable(false);
-		textField4.setEditable(false);
+		textFieldUnidade.setEditable(false);
+		textFieldQuantidade.setEditable(false);
+		textFieldValorTotal.setEditable(false);
 	}
 
 	private void montaCabecalhoCompleto() {
@@ -104,25 +104,25 @@ public class ConsultaProdutoView extends ViewBase {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
 
-		JLabel btnProduto_4 = new JLabel();
-		btnProduto_4.setText("Buscar");
-		btnProduto_4.setOpaque(true);
-		btnProduto_4.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_4.setForeground(Color.DARK_GRAY);
-		btnProduto_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_4.setBackground(Color.WHITE);
-		btnProduto_4.setBounds(584, 162, 111, 31);
-		btnProduto_4.addMouseListener(new MouseAdapter() {
+		JLabel btnBuscaProduto = new JLabel();
+		btnBuscaProduto.setText("Buscar");
+		btnBuscaProduto.setOpaque(true);
+		btnBuscaProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		btnBuscaProduto.setForeground(Color.DARK_GRAY);
+		btnBuscaProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnBuscaProduto.setBackground(Color.WHITE);
+		btnBuscaProduto.setBounds(584, 162, 111, 31);
+		btnBuscaProduto.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnProduto_4.setBackground(new Color(54, 209, 80));
-				btnProduto_4.setForeground(Color.WHITE);
-				btnProduto_4.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btnBuscaProduto.setBackground(new Color(54, 209, 80));
+				btnBuscaProduto.setForeground(Color.WHITE);
+				btnBuscaProduto.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnProduto_4.setBackground(Color.WHITE);
-				btnProduto_4.setForeground(Color.DARK_GRAY);
+				btnBuscaProduto.setBackground(Color.WHITE);
+				btnBuscaProduto.setForeground(Color.DARK_GRAY);
 			}
 
 			@Override
@@ -131,27 +131,27 @@ public class ConsultaProdutoView extends ViewBase {
 			}
 		});
 
-		add(btnProduto_4);
+		add(btnBuscaProduto);
 
-		JLabel btnProduto_2 = new JLabel();
-		btnProduto_2.setText("Cancelar");
-		btnProduto_2.setOpaque(true);
-		btnProduto_2.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_2.setForeground(Color.DARK_GRAY);
-		btnProduto_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_2.setBackground(Color.WHITE);
-		btnProduto_2.setBounds(410, 430, 256, 31);
-		btnProduto_2.addMouseListener(new MouseAdapter() {
+		JLabel btnCancelaProduto = new JLabel();
+		btnCancelaProduto.setText("Cancelar");
+		btnCancelaProduto.setOpaque(true);
+		btnCancelaProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		btnCancelaProduto.setForeground(Color.DARK_GRAY);
+		btnCancelaProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnCancelaProduto.setBackground(Color.WHITE);
+		btnCancelaProduto.setBounds(410, 430, 256, 31);
+		btnCancelaProduto.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnProduto_2.setBackground(new Color(224, 63, 63));
-				btnProduto_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				btnProduto_2.setForeground(Color.WHITE);
+				btnCancelaProduto.setBackground(new Color(224, 63, 63));
+				btnCancelaProduto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btnCancelaProduto.setForeground(Color.WHITE);
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnProduto_2.setBackground(Color.WHITE);
-				btnProduto_2.setForeground(Color.DARK_GRAY);
+				btnCancelaProduto.setBackground(Color.WHITE);
+				btnCancelaProduto.setForeground(Color.DARK_GRAY);
 			}
 
 			@Override
@@ -161,135 +161,135 @@ public class ConsultaProdutoView extends ViewBase {
 				produtoView.frame.setVisible(true);
 			}
 		});
-		this.add(btnProduto_2);
+		this.add(btnCancelaProduto);
 
 		frame.getContentPane().add(this);
 
-		lblNewLabel_3 = new JLabel("Nome: ");
-		lblNewLabel_3.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(115, 166, 59, 25);
-		add(lblNewLabel_3);
+		lblNome = new JLabel("Nome: ");
+		lblNome.setForeground(SystemColor.inactiveCaptionBorder);
+		lblNome.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblNome.setBounds(115, 166, 59, 25);
+		add(lblNome);
 
-		textField = new JTextField("");
-		textField.setCaretColor(new Color(240, 242, 245));
-		textField.setBorder(null);
-		textField.setOpaque(false);
-		textField.setForeground(new Color(240, 242, 245));
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField.setBounds(180, 156, 369, 40);
-		textField.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField.setColumns(10);
-		this.add(textField);
+		textFieldNome = new JTextField("");
+		textFieldNome.setCaretColor(new Color(240, 242, 245));
+		textFieldNome.setBorder(null);
+		textFieldNome.setOpaque(false);
+		textFieldNome.setForeground(new Color(240, 242, 245));
+		textFieldNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldNome.setBounds(180, 156, 369, 40);
+		textFieldNome.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldNome.setColumns(10);
+		this.add(textFieldNome);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(180, 189, 369, 2);
 		add(separator);
 
-		lblNewLabel_4 = new JLabel("Preço: ");
-		lblNewLabel_4.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(115, 216, 59, 25);
-		add(lblNewLabel_4);
+		lblPreco = new JLabel("Preço: ");
+		lblPreco.setForeground(SystemColor.inactiveCaptionBorder);
+		lblPreco.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblPreco.setBounds(115, 216, 59, 25);
+		add(lblPreco);
 
-		textField1 = new JTextField("");
-		textField1.setCaretColor(new Color(240, 242, 245));
-		textField1.setBorder(null);
-		textField1.setOpaque(false);
-		textField1.setForeground(new Color(240, 242, 245));
-		textField1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField1.setBounds(180, 206, 134, 40);
-		textField1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField1.setColumns(10);
-		textField1.addFocusListener(new FocusAdapter() {
+		textFieldPreco = new JTextField("");
+		textFieldPreco.setCaretColor(new Color(240, 242, 245));
+		textFieldPreco.setBorder(null);
+		textFieldPreco.setOpaque(false);
+		textFieldPreco.setForeground(new Color(240, 242, 245));
+		textFieldPreco.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldPreco.setBounds(180, 206, 134, 40);
+		textFieldPreco.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldPreco.setColumns(10);
+		textFieldPreco.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				textField4.setText(atualizaValorTotal(textField3, textField1));
+				textFieldValorTotal.setText(atualizaValorTotal(textFieldQuantidade, textFieldPreco));
 			}
 		});
-		this.add(textField1);
+		this.add(textFieldPreco);
 
 		separator1 = new JSeparator();
 		separator1.setBounds(180, 239, 134, 2);
 		add(separator1);
 
-		lblNewLabel_5 = new JLabel("R$: ");
-		lblNewLabel_5.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_5.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
-		lblNewLabel_5.setBounds(166, 219, 16, 25);
-		add(lblNewLabel_5);
+		lblCifrao2 = new JLabel("R$: ");
+		lblCifrao2.setForeground(SystemColor.inactiveCaptionBorder);
+		lblCifrao2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
+		lblCifrao2.setBounds(166, 219, 16, 25);
+		add(lblCifrao2);
 
-		lblNewLabel_6 = new JLabel("Unidade: ");
-		lblNewLabel_6.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_6.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_6.setBounds(96, 268, 78, 25);
-		add(lblNewLabel_6);
+		lblUnidade = new JLabel("Unidade: ");
+		lblUnidade.setForeground(SystemColor.inactiveCaptionBorder);
+		lblUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblUnidade.setBounds(96, 268, 78, 25);
+		add(lblUnidade);
 
-		textField2 = new JTextField("");
-		textField2.setCaretColor(new Color(240, 242, 245));
-		textField2.setBorder(null);
-		textField2.setOpaque(false);
-		textField2.setForeground(new Color(240, 242, 245));
-		textField2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField2.setBounds(180, 258, 134, 40);
-		textField2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField2.setColumns(10);
-		this.add(textField2);
+		textFieldUnidade = new JTextField("");
+		textFieldUnidade.setCaretColor(new Color(240, 242, 245));
+		textFieldUnidade.setBorder(null);
+		textFieldUnidade.setOpaque(false);
+		textFieldUnidade.setForeground(new Color(240, 242, 245));
+		textFieldUnidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldUnidade.setBounds(180, 258, 134, 40);
+		textFieldUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldUnidade.setColumns(10);
+		this.add(textFieldUnidade);
 
 		separator2 = new JSeparator();
 		separator2.setBounds(180, 291, 134, 2);
 		add(separator2);
 
-		lblNewLabel_7 = new JLabel("Quantidade: ");
-		lblNewLabel_7.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_7.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_7.setBounds(78, 320, 96, 25);
-		add(lblNewLabel_7);
+		lblQuantidade = new JLabel("Quantidade: ");
+		lblQuantidade.setForeground(SystemColor.inactiveCaptionBorder);
+		lblQuantidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblQuantidade.setBounds(78, 320, 96, 25);
+		add(lblQuantidade);
 
-		textField3 = new JTextField("");
-		textField3.addFocusListener(new FocusAdapter() {
+		textFieldQuantidade = new JTextField("");
+		textFieldQuantidade.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				textField4.setText(atualizaValorTotal(textField3, textField1));
+				textFieldValorTotal.setText(atualizaValorTotal(textFieldQuantidade, textFieldPreco));
 			}
 		});
-		textField3.setCaretColor(new Color(240, 242, 245));
-		textField3.setBorder(null);
-		textField3.setOpaque(false);
-		textField3.setForeground(new Color(240, 242, 245));
-		textField3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField3.setBounds(180, 310, 134, 40);
-		textField3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField3.setColumns(10);
-		this.add(textField3);
+		textFieldQuantidade.setCaretColor(new Color(240, 242, 245));
+		textFieldQuantidade.setBorder(null);
+		textFieldQuantidade.setOpaque(false);
+		textFieldQuantidade.setForeground(new Color(240, 242, 245));
+		textFieldQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldQuantidade.setBounds(180, 310, 134, 40);
+		textFieldQuantidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldQuantidade.setColumns(10);
+		this.add(textFieldQuantidade);
 
 		separator3 = new JSeparator();
 		separator3.setBounds(180, 343, 134, 2);		
 		add(separator3);
 
-		lblNewLabel_8 = new JLabel("Valor Total: ");
-		lblNewLabel_8.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_8.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_8.setBounds(78, 372, 96, 25);
-		add(lblNewLabel_8);
+		lblValorTotal = new JLabel("Valor Total: ");
+		lblValorTotal.setForeground(SystemColor.inactiveCaptionBorder);
+		lblValorTotal.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lblValorTotal.setBounds(78, 372, 96, 25);
+		add(lblValorTotal);
 		
-		lblNewLabel_9 = new JLabel("R$: ");
-		lblNewLabel_9.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_9.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
-		lblNewLabel_9.setBounds(166, 375, 16, 25);
-		add(lblNewLabel_9);
+		lblCifrao = new JLabel("R$: ");
+		lblCifrao.setForeground(SystemColor.inactiveCaptionBorder);
+		lblCifrao.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
+		lblCifrao.setBounds(166, 375, 16, 25);
+		add(lblCifrao);
 
-		textField4 = new JTextField("");
-		textField4.setCaretColor(new Color(240, 242, 245));
-		textField4.setBorder(null);
-		textField4.setOpaque(false);
-		textField4.setEditable(false);
-		textField4.setForeground(new Color(240, 242, 245));
-		textField4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField4.setBounds(180, 362, 134, 31);
-		textField4.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textField4.setColumns(10);
-		this.add(textField4);
+		textFieldValorTotal = new JTextField("");
+		textFieldValorTotal.setCaretColor(new Color(240, 242, 245));
+		textFieldValorTotal.setBorder(null);
+		textFieldValorTotal.setOpaque(false);
+		textFieldValorTotal.setEditable(false);
+		textFieldValorTotal.setForeground(new Color(240, 242, 245));
+		textFieldValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldValorTotal.setBounds(180, 362, 134, 31);
+		textFieldValorTotal.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldValorTotal.setColumns(10);
+		this.add(textFieldValorTotal);
 
 		separator4 = new JSeparator();
 		separator4.setBounds(180, 395, 134, 2);
@@ -298,7 +298,7 @@ public class ConsultaProdutoView extends ViewBase {
 	
 	private void buscaProduto() {
 		try {
-			String nomeProduto = textField.getText();
+			String nomeProduto = textFieldNome.getText();
 			ProdutoDTO produtoDto = produtoController.buscaProdutoPorNome(nomeProduto);
 			preencheCamposProdutoTela(produtoDto);
 			mudaEdicaoCampos(true);
@@ -312,16 +312,16 @@ public class ConsultaProdutoView extends ViewBase {
 	}
 
 	private void esvaziaCamposProdutoTela() {
-		textField1.setText("");
-		textField2.setText("");
-		textField3.setText("");
-		textField4.setText("");
+		textFieldPreco.setText("");
+		textFieldUnidade.setText("");
+		textFieldQuantidade.setText("");
+		textFieldValorTotal.setText("");
 	}
 
 	private void preencheCamposProdutoTela(ProdutoDTO produto) {
-		textField1.setText(produto.getPrecoUnitario().toString());
-		textField2.setText(produto.getUnidadeMedida());
-		textField3.setText(produto.getQuantidadeEstoque().toString());
-		textField4.setText(produto.getValorTotalEstoque().toString());
+		textFieldPreco.setText(produto.getPrecoUnitario().toString());
+		textFieldUnidade.setText(produto.getUnidadeMedida());
+		textFieldQuantidade.setText(produto.getQuantidadeEstoque().toString());
+		textFieldValorTotal.setText(produto.getValorTotalEstoque().toString());
 	}
 }
