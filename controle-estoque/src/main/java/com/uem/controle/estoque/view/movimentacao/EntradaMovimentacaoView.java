@@ -230,10 +230,10 @@ public class EntradaMovimentacaoView extends ViewBase {
 		separator1.setBounds(180, 239, 134, 2);
 		add(separator1);
 
-		lblNewLabel_6 = new JLabel("Quantidade Entrada: ");
+		lblNewLabel_6 = new JLabel("Quantidade Saída:");
 		lblNewLabel_6.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_6.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblNewLabel_6.setBounds(22, 268, 152, 25);
+		lblNewLabel_6.setBounds(40, 268, 134, 25);
 		add(lblNewLabel_6);
 
 		textField2 = new JTextField("");

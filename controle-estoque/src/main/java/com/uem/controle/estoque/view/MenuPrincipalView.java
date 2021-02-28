@@ -16,6 +16,7 @@ import com.uem.controle.estoque.ApplicationContextProvider;
 import com.uem.controle.estoque.view.movimentacao.MovimentacaoView;
 import com.uem.controle.estoque.view.produto.ProdutoView;
 import com.uem.controle.estoque.view.reajuste.ReajustePrecoView;
+import com.uem.controle.estoque.view.relatorio.RelatorioView;
 
 @Component
 public class MenuPrincipalView extends ViewBase{
@@ -160,7 +161,10 @@ public class MenuPrincipalView extends ViewBase{
         	
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO
+				frame.setVisible(false);
+				RelatorioView relatorioView = ApplicationContextProvider.getContext().getBean(RelatorioView.class);				
+				relatorioView.frame.setVisible(true);	
+				
 			}
 		});
 		this.add(btnProduto_3);

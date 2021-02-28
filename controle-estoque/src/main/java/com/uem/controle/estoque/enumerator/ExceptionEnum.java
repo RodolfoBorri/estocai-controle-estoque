@@ -9,9 +9,11 @@ public enum ExceptionEnum {
 	CE_5("O nome do produto deve ser diferente de vazio."),
 	CE_6("A unidade do produto deve ser diferente de vazio."),
 	CE_7("Produto de nome %s não encontrado."),
-	CE_8("Por favor digite uma quantidade maior que zero para movimentação"),
-	CE_9("Problema de conversão de dados, verifique as informações digitadas"),
-	CE_10("Por favor digite um percentual maior que 0");
+	CE_8("Por favor digite uma quantidade maior que zero para movimentação."),
+	CE_9("Problema de conversão de dados, verifique as informações digitadas."),
+	CE_10("Por favor digite um percentual maior que 0."), 
+	CE_11("O caminho destino não é um caminho válido para o relatório."),
+	CE_12("O caminho %s não pode ser utilizado por permissões do sistema operacional.");
 	
 	
 	private String codigo;

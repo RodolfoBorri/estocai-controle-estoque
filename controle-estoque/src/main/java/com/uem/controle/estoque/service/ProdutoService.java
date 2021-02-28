@@ -1,6 +1,7 @@
 package com.uem.controle.estoque.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,18 @@ public class ProdutoService {
 		produtoDto.setValorTotalEstoque(produto.getValorTotalEstoque());
 		
 		return produtoDto;
+	}
+	
+	public List<ProdutoDTO> buscaProdutosEOrdenaPorNome(){
+		List<Produto> produtos = produtoRepository.findAllByOrderByNomeAsc();
+		
+		List<ProdutoDTO> produtosDTO = new ArrayList<ProdutoDTO>();
+		
+		for(Produto produto : produtos) {
+			produtosDTO.add(entidadeParaDto(produto));
+		}
+		
+		return produtosDTO;
 	}
 
 	private String validaCadastroNome(ProdutoDTO produtoDto) {

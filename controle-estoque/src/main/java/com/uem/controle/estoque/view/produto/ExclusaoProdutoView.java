@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import com.uem.controle.estoque.ApplicationContextProvider;
 import com.uem.controle.estoque.controller.ProdutoController;
 import com.uem.controle.estoque.dto.ProdutoDTO;
+import com.uem.controle.estoque.enumerator.ExceptionEnum;
 import com.uem.controle.estoque.view.ViewBase;
 
 @Component
@@ -378,10 +379,12 @@ public class ExclusaoProdutoView extends ViewBase {
 			unidade = textField2.getText();
 			quantidade = Integer.parseInt(textField3.getText());
 			valorTotalEstoque = preco.multiply(new BigDecimal(quantidade));
+			
 			return new ProdutoDTO(nome, preco, unidade, quantidade, valorTotalEstoque);
 			
 		} catch (Exception e) {
-			return new ProdutoDTO("", new BigDecimal("0"), "", -1, new BigDecimal("0"));
+			JOptionPane.showMessageDialog(null, ExceptionEnum.CE_9.getCodigo(), "ERRO!", JOptionPane.WARNING_MESSAGE);
+			return null;
 		}
 	}
 }
