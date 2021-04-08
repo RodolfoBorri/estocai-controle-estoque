@@ -33,7 +33,7 @@ public class ReajustePreco {
 	private BigDecimal percentualReajuste;
 	
 	@OneToOne
-	@JoinColumn(name = "id_produto", nullable = true)
+	@JoinColumn(name = "id_produto", nullable = true, referencedColumnName = "id")
 	private Produto produto;
 
 	public ReajustePreco() { }

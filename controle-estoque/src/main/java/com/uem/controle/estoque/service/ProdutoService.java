@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.uem.controle.estoque.builder.ProdutoBuilder;
 import com.uem.controle.estoque.dto.ProdutoDTO;
+import com.uem.controle.estoque.dto.UnidadeMedidaDTO;
 import com.uem.controle.estoque.entity.Produto;
+import com.uem.controle.estoque.entity.UnidadeMedida;
 import com.uem.controle.estoque.enumerator.ExceptionEnum;
 import com.uem.controle.estoque.exception.ExceptionHandler;
 import com.uem.controle.estoque.repository.ProdutoRepository;
@@ -26,6 +28,9 @@ public class ProdutoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 	
+	@Autowired
+	UnidadeMedidaService unidadeMedidaService; 
+	
 	@Transactional
 	public void cadastra(ProdutoDTO produtoDto) {
 		try {
@@ -36,12 +41,18 @@ public class ProdutoService {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	private UnidadeMedida buscaUnidade(String unidade) {
+		return unidadeMedidaService.buscaEntidadeUnidade(unidade);
+	}
 
 	private Produto dtoParaEntidade(ProdutoDTO produtoDto) {
+		UnidadeMedida unidade = buscaUnidade(produtoDto.getUnidadeMedida().getUnidade());
+		
 		Produto produto = new ProdutoBuilder().setNome(produtoDto.getNome())
 											  .setPrecoUnitario(produtoDto.getPrecoUnitario())
 											  .setQuantidadeEstoque(produtoDto.getQuantidadeEstoque())
-											  .setUnidadeMedida(produtoDto.getUnidadeMedida())
+											  .setUnidadeMedida(unidade)
 											  .build();
 		return produto;
 	}
@@ -49,10 +60,13 @@ public class ProdutoService {
 	private ProdutoDTO entidadeParaDto(Produto produto) {
 		ProdutoDTO produtoDto = new ProdutoDTO();
 		
+		UnidadeMedidaDTO unidadeMedidaDTO = new UnidadeMedidaDTO(produto.getUnidadeMedida().getDescricao(),
+				produto.getUnidadeMedida().getUnidade());
+		
 		produtoDto.setNome(produto.getNome());
 		produtoDto.setPrecoUnitario(produto.getPreco());
 		produtoDto.setQuantidadeEstoque(produto.getQuantidadeEstoque());
-		produtoDto.setUnidadeMedida(produto.getUnidadeMedida());
+		produtoDto.setUnidadeMedida(unidadeMedidaDTO);
 		produtoDto.setValorTotalEstoque(produto.getValorTotalEstoque());
 		
 		return produtoDto;
@@ -166,9 +180,9 @@ public class ProdutoService {
 		return produtoRepository.findByNome(nome).orElseThrow(() -> new ExceptionHandler(ExceptionEnum.CE_7, nome)); 
 	}
 
-	public void exclui(ProdutoDTO produtoDto) {
+	public void exclui(String nome) {
 		try {
-			Produto produto = produtoRepository.findByNome(produtoDto.getNome()).get();
+			Produto produto = buscaEntidadeProduto(nome);
 			produtoRepository.delete(produto);
 		}
 		catch(Exception e) {
@@ -177,20 +191,24 @@ public class ProdutoService {
 	}
 
 	public void altera(ProdutoDTO produtoDto) {
-		Produto produtoOrigem = produtoRepository.findByNome(produtoDto.getNome()).get();
-		preencheVariaveisAlteracao(produtoOrigem, produtoDto);
-		produtoRepository.save(produtoOrigem);
+		try {
+			Produto produtoOrigem = buscaEntidadeProduto(produtoDto.getNome());
+			preencheVariaveisAlteracao(produtoOrigem, produtoDto);
+			produtoRepository.save(produtoOrigem);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	private void preencheVariaveisAlteracao(Produto produtoOrigem, ProdutoDTO produtoDto) {
 		produtoOrigem.setPreco(produtoDto.getPrecoUnitario());
 		produtoOrigem.setQuantidadeEstoque(produtoDto.getQuantidadeEstoque());
-		produtoOrigem.setUnidadeMedida(produtoDto.getUnidadeMedida());
+		produtoOrigem.setUnidadeMedida(buscaUnidade(produtoDto.getUnidadeMedida().getUnidade()));
 		produtoOrigem.setValorTotalEstoque(produtoDto.getValorTotalEstoque());
 	}
 
-	public void realizaMovimentacao(ProdutoDTO produtoDto, Integer quantidade, String tipoAlteracao) {
-		Produto produtoOrigem = produtoRepository.findByNome(produtoDto.getNome()).get();
+	public void realizaMovimentacao(ProdutoDTO produtoDto, Integer quantidade, String tipoAlteracao) throws ExceptionHandler {
 		
 		if(FLUXO_ENTRADA.equals(tipoAlteracao)) 
 			produtoDto.setQuantidadeEstoque(produtoDto.getQuantidadeEstoque() + quantidade);			
@@ -199,11 +217,10 @@ public class ProdutoService {
 			produtoDto.setQuantidadeEstoque(produtoDto.getQuantidadeEstoque() - quantidade);
 		
 		produtoDto.setValorTotalEstoque(produtoDto.getPrecoUnitario().multiply(new BigDecimal(produtoDto.getQuantidadeEstoque())));
-		preencheVariaveisAlteracao(produtoOrigem, produtoDto);
-		produtoRepository.save(produtoOrigem);
+		altera(produtoDto);
 	}
 
-	public void realizaReajuste(BigDecimal porcentagem) {
+	public void realizaReajusteGeral(BigDecimal porcentagem) {
 		List<Produto> produtos = produtoRepository.findAll();
 		
 		for(Produto produto : produtos) {

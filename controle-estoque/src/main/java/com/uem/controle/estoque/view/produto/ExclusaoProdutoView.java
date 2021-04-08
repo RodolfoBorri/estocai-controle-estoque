@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.math.BigDecimal;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -28,7 +27,6 @@ import org.springframework.stereotype.Component;
 import com.uem.controle.estoque.ApplicationContextProvider;
 import com.uem.controle.estoque.controller.ProdutoController;
 import com.uem.controle.estoque.dto.ProdutoDTO;
-import com.uem.controle.estoque.enumerator.ExceptionEnum;
 import com.uem.controle.estoque.view.ViewBase;
 
 @Component
@@ -72,10 +70,11 @@ public class ExclusaoProdutoView extends ViewBase {
 		this.setBorder(BorderFactory.createEmptyBorder(32, 32, 600, 1000));
 		initialize();
 		montaCabecalhoCompleto();
-		mudaEdicaoCampos(false);
+		mudaEdicaoCampos(true);
 	}
 
 	private void mudaEdicaoCampos(boolean podeEditar) {		//Muda-se a edição do campo conforme for realizar a busca
+		textFieldNome.setEditable(podeEditar);
 		textFieldUnidade.setEditable(false);
 		textFieldQuantidade.setEditable(false);
 		textFieldValorTotal.setEditable(false);
@@ -130,13 +129,12 @@ public class ExclusaoProdutoView extends ViewBase {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ProdutoDTO produtoDto = converteCamposParaDto();
 				
 				int result = JOptionPane.showConfirmDialog(frame, "Deseja confirmar a exclusão ?",
 						"Confirmação de exclusão", JOptionPane.YES_NO_OPTION);
 
 				if (result == JOptionPane.YES_OPTION) {
-					produtoController.exclui(produtoDto); 
+					produtoController.exclui(textFieldNome.getText()); 
 					JOptionPane.showMessageDialog(null, "Produto Excluído com sucesso!", "SUCESSO",
 							JOptionPane.INFORMATION_MESSAGE);
 				} else if (result == JOptionPane.NO_OPTION)
@@ -344,13 +342,13 @@ public class ExclusaoProdutoView extends ViewBase {
 			String nomeProduto = textFieldNome.getText();
 			ProdutoDTO produto = produtoController.buscaProdutoPorNome(nomeProduto);
 			preencheCamposProdutoTela(produto);
-			mudaEdicaoCampos(true);
+			mudaEdicaoCampos(false);
 		}
 		catch(Exception ex)
 		{
 			esvaziaCamposProdutoTela();
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO!", JOptionPane.WARNING_MESSAGE);
-			mudaEdicaoCampos(false);
+			mudaEdicaoCampos(true);
 		}
 	}
 
@@ -363,28 +361,9 @@ public class ExclusaoProdutoView extends ViewBase {
 
 	private void preencheCamposProdutoTela(ProdutoDTO produto) {
 		textFieldPreco.setText(produto.getPrecoUnitario().toString());
-		textFieldUnidade.setText(produto.getUnidadeMedida());
+		textFieldUnidade.setText(produto.getUnidadeMedida().toString());
 		textFieldQuantidade.setText(produto.getQuantidadeEstoque().toString());
 		textFieldValorTotal.setText(produto.getValorTotalEstoque().toString());
 	}
 	
-	private ProdutoDTO converteCamposParaDto() {
-		String nome, unidade;
-		int quantidade;
-		BigDecimal preco, valorTotalEstoque;
-
-		try {
-			nome = textFieldNome.getText();
-			preco = new BigDecimal(textFieldPreco.getText());
-			unidade = textFieldUnidade.getText();
-			quantidade = Integer.parseInt(textFieldQuantidade.getText());
-			valorTotalEstoque = preco.multiply(new BigDecimal(quantidade));
-			
-			return new ProdutoDTO(nome, preco, unidade, quantidade, valorTotalEstoque);
-			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, ExceptionEnum.CE_9.getCodigo(), "ERRO!", JOptionPane.WARNING_MESSAGE);
-			return null;
-		}
-	}
 }

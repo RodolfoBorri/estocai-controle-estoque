@@ -7,13 +7,13 @@ import com.uem.controle.estoque.dto.MovimentacaoDTO;
 import com.uem.controle.estoque.service.MovimentacaoService;
 
 @Controller
-public class MovimentacaoController extends ControllerBase{
+public class MovimentacaoController {
 
 	@Autowired
 	MovimentacaoService movimentacaoService;
 	
 	public String validaCamposMovimentacao(MovimentacaoDTO movimentacaoDto) {
-		return movimentacaoService.validaCamposProduto(movimentacaoDto);		
+		return movimentacaoService.validaCamposMovimentacao(movimentacaoDto);		
 	}
 
 	public void realizaMovimentacao(MovimentacaoDTO movimentacaoDto) {

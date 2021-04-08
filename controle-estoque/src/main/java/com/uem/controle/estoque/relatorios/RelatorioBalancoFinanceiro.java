@@ -38,7 +38,7 @@ public class RelatorioBalancoFinanceiro extends RelatorioBase{
 		for(ProdutoDTO produto : produtos) {
 				String nomeProduto = produto.getNome();
 				String precoUnitario = produto.getPrecoUnitario().toString();
-				String unidadeMedida = produto.getUnidadeMedida();
+				String unidadeMedida = produto.getUnidadeMedida().toString();
 				String quantidade = produto.getQuantidadeEstoque().toString();
 				BigDecimal precoTotal = produto.getValorTotalEstoque();
 				

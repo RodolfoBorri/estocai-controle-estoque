@@ -8,7 +8,7 @@ import com.uem.controle.estoque.exception.ExceptionHandler;
 import com.uem.controle.estoque.service.ProdutoService;
 
 @Controller
-public class ProdutoController extends ControllerBase{
+public class ProdutoController {
 	
 	@Autowired
 	ProdutoService produtoService;
@@ -25,8 +25,8 @@ public class ProdutoController extends ControllerBase{
 		return produtoService.buscaProdutoPorNome(nome);
 	}
 
-	public void exclui(ProdutoDTO produtoDto) {
-		produtoService.exclui(produtoDto);
+	public void exclui(String nome) {
+		produtoService.exclui(nome);
 	}
 
 	public void alteraProduto(ProdutoDTO produtoDto) {

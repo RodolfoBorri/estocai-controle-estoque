@@ -11,14 +11,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -27,7 +33,9 @@ import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
 import com.uem.controle.estoque.controller.ProdutoController;
+import com.uem.controle.estoque.controller.UnidadeMedidaController;
 import com.uem.controle.estoque.dto.ProdutoDTO;
+import com.uem.controle.estoque.dto.UnidadeMedidaDTO;
 import com.uem.controle.estoque.enumerator.ExceptionEnum;
 import com.uem.controle.estoque.view.ViewBase;
 
@@ -40,13 +48,17 @@ public class InclusaoProdutoView extends ViewBase {
 	@Autowired
 	ProdutoController produtoController;
 	
+	@Autowired
+	UnidadeMedidaController unidadeController;
+	
 	public JFrame frame;
 	private JTextField textFieldNome;
 	private JTextField textFieldPreco;
-	private JTextField textFieldUnidade;
 	private JTextField textFieldQualidade;
 	private JTextField textFieldValor;
-		
+	private JComboBox<UnidadeMedidaDTO> comboBoxUnidade;
+	private List<UnidadeMedidaDTO> unidades;
+	
 	public static void run() {
 		try {
 			InclusaoProdutoView window = new InclusaoProdutoView();
@@ -56,10 +68,27 @@ public class InclusaoProdutoView extends ViewBase {
 		}
 	}
 
-	public InclusaoProdutoView() {
+	public InclusaoProdutoView() throws Exception{
+		setBackground(Color.WHITE);
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		this.setBorder(BorderFactory.createEmptyBorder(32, 32, 600, 1000));
 		initialize();
 		montaCabecalhoCompleto();
+	}
+	
+	@PostConstruct
+	private void preencheComboBox() throws UnsupportedLookAndFeelException {	//é preciso instanciar depois o comboBox para
+		unidades = unidadeController.buscaTodasUnidades();					   //pegar a instancia do controller
+		
+		comboBoxUnidade = new JComboBox(unidades.toArray());
+		comboBoxUnidade.setBackground(Color.WHITE);
+		comboBoxUnidade.setOpaque(false);
+		comboBoxUnidade.setForeground(Color.BLACK);
+		comboBoxUnidade.setBorder(new EmptyBorder(0, 0, 0, 0));		
+		comboBoxUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		comboBoxUnidade.setBounds(180, 254, 155, 41);
+		
+		this.add(comboBoxUnidade);
 	}
 	
 	private void montaCabecalhoCompleto() {
@@ -72,6 +101,7 @@ public class InclusaoProdutoView extends ViewBase {
 	}
 
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -219,28 +249,17 @@ public class InclusaoProdutoView extends ViewBase {
 		separator1.setBounds(180, 239, 134, 2);
 		add(separator1);
 		
-		JLabel lblNewLabel_5 = new JLabel("R$: ");
-		lblNewLabel_5.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_5.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
-		lblNewLabel_5.setBounds(166, 219, 16, 25);
-		add(lblNewLabel_5);
+		JLabel lblCifrao2 = new JLabel("R$: ");
+		lblCifrao2.setForeground(SystemColor.inactiveCaptionBorder);
+		lblCifrao2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
+		lblCifrao2.setBounds(166, 219, 16, 25);
+		add(lblCifrao2);
 		
 		JLabel lblUnidade = new JLabel("Unidade: ");
 		lblUnidade.setForeground(SystemColor.inactiveCaptionBorder);
 		lblUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblUnidade.setBounds(96, 268, 78, 25);
 		add(lblUnidade);
-		
-		textFieldUnidade = new JTextField();
-		textFieldUnidade.setCaretColor(new Color(240, 242, 245));
-		textFieldUnidade.setBorder(null);
-		textFieldUnidade.setOpaque(false);
-		textFieldUnidade.setForeground(new Color(240, 242, 245));
-		textFieldUnidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textFieldUnidade.setBounds(180, 258, 134, 40);
-		textFieldUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textFieldUnidade.setColumns(10);
-		this.add(textFieldUnidade);		
 		
 		JSeparator separator2 = new JSeparator();
 		separator2.setBounds(180, 291, 134, 2);
@@ -279,11 +298,11 @@ public class InclusaoProdutoView extends ViewBase {
 		lblValorTotal.setBounds(78, 372, 96, 25);
 		add(lblValorTotal);
 		
-		JLabel lblNewLabel_9 = new JLabel("R$: ");
-		lblNewLabel_9.setForeground(SystemColor.inactiveCaptionBorder);
-		lblNewLabel_9.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
-		lblNewLabel_9.setBounds(166, 375, 16, 25);
-		add(lblNewLabel_9);
+		JLabel lblCifrao = new JLabel("R$: ");
+		lblCifrao.setForeground(SystemColor.inactiveCaptionBorder);
+		lblCifrao.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
+		lblCifrao.setBounds(166, 375, 16, 25);
+		add(lblCifrao);
 		
 		textFieldValor = new JTextField();
 		textFieldValor.setCaretColor(new Color(240, 242, 245));
@@ -300,6 +319,8 @@ public class InclusaoProdutoView extends ViewBase {
 		JSeparator separator4 = new JSeparator();
 		separator4.setBounds(180, 395, 134, 2);
 		add(separator4);
+		
+		
 	}	
 	
 	private String validaInsercao(ProdutoDTO produtoDto) {
@@ -307,19 +328,21 @@ public class InclusaoProdutoView extends ViewBase {
 	}	
 	
 	private ProdutoDTO converteCamposParaDto() {
-		String nome, unidade;
+		String nome;
+		UnidadeMedidaDTO unidade;
 		int quantidade;
 		BigDecimal preco, valorTotalEstoque;
 		
 		try {
 			nome = textFieldNome.getText();
 			preco = new BigDecimal(textFieldPreco.getText());
-			unidade = textFieldUnidade.getText();
+			unidade = converteStringEmUnidadeDTO(comboBoxUnidade.getSelectedItem().toString());
 			quantidade = Integer.parseInt(textFieldQualidade.getText());
 			valorTotalEstoque = preco.multiply(new BigDecimal(quantidade));
 			return new ProdutoDTO(nome, preco, unidade, quantidade, valorTotalEstoque);
 		}
 		catch(Exception e) {
+			System.out.println(e.getMessage());
 			JOptionPane.showMessageDialog(null, ExceptionEnum.CE_9.getCodigo(), "ERRO!", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}

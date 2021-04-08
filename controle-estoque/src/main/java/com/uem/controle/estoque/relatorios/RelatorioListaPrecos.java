@@ -32,7 +32,7 @@ public class RelatorioListaPrecos extends RelatorioBase{
 		for(ProdutoDTO produto : produtos) {			
 				String nomeProduto = produto.getNome();
 				String precoUnitario = produto.getPrecoUnitario().toString();
-				String unidadeMedida = produto.getUnidadeMedida();
+				String unidadeMedida = produto.getUnidadeMedida().toString();
 				
 				bodyBuilder.append(nomeProduto + concatenaEspacos(nomeProduto, limiteColuna1));			
 				

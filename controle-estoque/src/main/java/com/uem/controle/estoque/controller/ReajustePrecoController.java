@@ -7,7 +7,7 @@ import com.uem.controle.estoque.dto.ReajustePrecoDTO;
 import com.uem.controle.estoque.service.ReajustePrecoService;
 
 @Controller
-public class ReajustePrecoController extends ControllerBase{
+public class ReajustePrecoController {
 
 	@Autowired
 	ReajustePrecoService reajustePrecoService;

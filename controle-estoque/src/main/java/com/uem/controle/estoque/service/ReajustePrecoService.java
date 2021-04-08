@@ -78,7 +78,7 @@ public class ReajustePrecoService {
 				
 			}
 			else if(REAJUSTE_GERAL.equals(reajusteDto.getTipoReajuste())) {
-				produtoService.realizaReajuste(porcentagem);
+				produtoService.realizaReajusteGeral(porcentagem);
 				
 				ReajustePreco reajustePreco = dtoParaEntidade(reajusteDto, null);
 				reajustePrecoRepository.save(reajustePreco);

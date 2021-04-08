@@ -320,7 +320,7 @@ public class ConsultaProdutoView extends ViewBase {
 
 	private void preencheCamposProdutoTela(ProdutoDTO produto) {
 		textFieldPreco.setText(produto.getPrecoUnitario().toString());
-		textFieldUnidade.setText(produto.getUnidadeMedida());
+		textFieldUnidade.setText(produto.getUnidadeMedida().toString());
 		textFieldQuantidade.setText(produto.getQuantidadeEstoque().toString());
 		textFieldValorTotal.setText(produto.getValorTotalEstoque().toString());
 	}

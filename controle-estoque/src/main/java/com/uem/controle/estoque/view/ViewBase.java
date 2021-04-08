@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.uem.controle.estoque.dto.UnidadeMedidaDTO;
+
 public class ViewBase extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
@@ -34,6 +36,16 @@ public class ViewBase extends JPanel {
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, w, h);
     }
+	
+	protected UnidadeMedidaDTO converteStringEmUnidadeDTO(String string) {
+		String stringSemEspacos = string.replaceAll(" ", "");	//removendo espaços
+		int indexSeparador = stringSemEspacos.indexOf("-");
+		
+		String unidade = stringSemEspacos.substring(0, indexSeparador);
+		String descricao = stringSemEspacos.substring(indexSeparador + 1, stringSemEspacos.length());
+		
+		return new UnidadeMedidaDTO(descricao, unidade);
+	}
 	
 	protected String atualizaQuantidadeTotalMovimentacao(JTextField textFieldQuantidadeAtual, JTextField textFieldQuantidadeEntrada, String operacao) {
 		

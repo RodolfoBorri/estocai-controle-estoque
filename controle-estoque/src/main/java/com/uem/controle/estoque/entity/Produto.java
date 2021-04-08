@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,8 +28,9 @@ public class Produto {
 	@Column(name = "PRECO_UNITARIO", nullable = false)
 	private BigDecimal precoUnitario;
 	
-	@Column(name = "UNIDADE_DE_MEDIDA", nullable = false)
-	private String unidadeMedida;
+	@OneToOne
+	@JoinColumn(name = "id_unidade", nullable = false, referencedColumnName = "id")
+	private UnidadeMedida unidadeMedida;
 	
 	@Column(name = "QUANTIDADE_ESTOQUE", nullable = false)
 	private Integer quantidadeEstoque;
@@ -40,7 +43,7 @@ public class Produto {
 	
 	public Produto() { }
 
-	public Produto(String nome, BigDecimal precoUnitario, String unidadeMedida, int quantidadeEstoque) {
+	public Produto(String nome, BigDecimal precoUnitario, UnidadeMedida unidadeMedida, int quantidadeEstoque) {
 		super();
 		this.nome = nome;
 		this.precoUnitario = precoUnitario;
@@ -76,10 +79,10 @@ public class Produto {
 	public void setPreco(BigDecimal preco) {
 		this.precoUnitario = preco;
 	}
-	public String getUnidadeMedida() {
+	public UnidadeMedida getUnidadeMedida() {
 		return unidadeMedida;
 	}
-	public void setUnidadeMedida(String unidadeMedida) {
+	public void setUnidadeMedida(UnidadeMedida unidadeMedida) {
 		this.unidadeMedida = unidadeMedida;
 	}
 	public Integer getQuantidadeEstoque() {

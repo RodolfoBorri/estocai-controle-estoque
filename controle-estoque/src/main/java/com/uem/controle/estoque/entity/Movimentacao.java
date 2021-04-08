@@ -36,7 +36,7 @@ public class Movimentacao {
 	private String tipoMovimentacao;
 
 	@ManyToOne
-	@JoinColumn(name = "id_produto", nullable = false)
+	@JoinColumn(name = "id_produto", nullable = false, referencedColumnName = "id")
 	private Produto produto;
 	
 	public Movimentacao() { }

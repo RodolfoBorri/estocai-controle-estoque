@@ -86,7 +86,7 @@ public class RelatorioView extends ViewBase {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
 		
-		JLabel lblNewLabel_3 = new JLabel("Caminho do sistema:");
+		JLabel lblNewLabel_3 = new JLabel("Diretório do sistema:");
 		lblNewLabel_3.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNewLabel_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblNewLabel_3.setBounds(27, 183, 144, 25);

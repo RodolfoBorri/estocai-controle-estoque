@@ -17,6 +17,7 @@ import com.uem.controle.estoque.view.movimentacao.MovimentacaoView;
 import com.uem.controle.estoque.view.produto.ProdutoView;
 import com.uem.controle.estoque.view.reajuste.ReajustePrecoView;
 import com.uem.controle.estoque.view.relatorio.RelatorioView;
+import com.uem.controle.estoque.view.unidade.UnidadeMedidaView;
 
 @Component
 public class MenuPrincipalView extends ViewBase{
@@ -61,7 +62,7 @@ public class MenuPrincipalView extends ViewBase{
 		
 		btnProduto = new JLabel();
 		btnProduto.setOpaque(true);
-		btnProduto.setBounds(121, 184, 458, 31);
+		btnProduto.setBounds(121, 173, 458, 31);
 		btnProduto.setBackground(Color.WHITE);
         btnProduto.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18));
         btnProduto.setForeground(Color.DARK_GRAY);
@@ -86,22 +87,22 @@ public class MenuPrincipalView extends ViewBase{
 		});
         this.add(btnProduto);                
 		
-		JLabel btnProduto_1 = new JLabel();
-		btnProduto_1.setText("Movimentação");
-		btnProduto_1.setOpaque(true);
-		btnProduto_1.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_1.setForeground(Color.DARK_GRAY);
-		btnProduto_1.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_1.setBackground(Color.WHITE);
-		btnProduto_1.setBounds(121, 249, 458, 31);
-		btnProduto_1.addMouseListener(new MouseAdapter() {
+		JLabel btnMovimentacao = new JLabel();
+		btnMovimentacao.setText("Movimentação");
+		btnMovimentacao.setOpaque(true);
+		btnMovimentacao.setHorizontalAlignment(SwingConstants.CENTER);
+		btnMovimentacao.setForeground(Color.DARK_GRAY);
+		btnMovimentacao.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnMovimentacao.setBackground(Color.WHITE);
+		btnMovimentacao.setBounds(121, 238, 458, 31);
+		btnMovimentacao.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		mouseEnteredEvent(btnProduto_1);
+        		mouseEnteredEvent(btnMovimentacao);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	mouseLeftEvent(btnProduto_1);
+            	mouseLeftEvent(btnMovimentacao);
             }
         	
 			@Override
@@ -112,24 +113,24 @@ public class MenuPrincipalView extends ViewBase{
 				
 			}
 		});
-		this.add(btnProduto_1);
+		this.add(btnMovimentacao);
 		
-		JLabel btnProduto_2 = new JLabel();
-		btnProduto_2.setText("Reajuste de preços");
-		btnProduto_2.setOpaque(true);
-		btnProduto_2.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_2.setForeground(Color.DARK_GRAY);
-		btnProduto_2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_2.setBackground(Color.WHITE);
-		btnProduto_2.setBounds(121, 311, 458, 31);
-		btnProduto_2.addMouseListener(new MouseAdapter() {
+		JLabel btnReajuste = new JLabel();
+		btnReajuste.setText("Reajuste de preços");
+		btnReajuste.setOpaque(true);
+		btnReajuste.setHorizontalAlignment(SwingConstants.CENTER);
+		btnReajuste.setForeground(Color.DARK_GRAY);
+		btnReajuste.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnReajuste.setBackground(Color.WHITE);
+		btnReajuste.setBounds(121, 300, 458, 31);
+		btnReajuste.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		mouseEnteredEvent(btnProduto_2);
+        		mouseEnteredEvent(btnReajuste);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	mouseLeftEvent(btnProduto_2);
+            	mouseLeftEvent(btnReajuste);
             }
         	
 			@Override
@@ -139,24 +140,24 @@ public class MenuPrincipalView extends ViewBase{
 				reajustePrecoView.frame.setVisible(true);				
 			}
 		});
-		this.add(btnProduto_2);
+		this.add(btnReajuste);
 		
-		JLabel btnProduto_3 = new JLabel();
-		btnProduto_3.setText("Relatórios");
-		btnProduto_3.setOpaque(true);
-		btnProduto_3.setHorizontalAlignment(SwingConstants.CENTER);
-		btnProduto_3.setForeground(Color.DARK_GRAY);
-		btnProduto_3.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
-		btnProduto_3.setBackground(Color.WHITE);
-		btnProduto_3.setBounds(121, 374, 458, 31);
-		btnProduto_3.addMouseListener(new MouseAdapter() {
+		JLabel btnRelatorio = new JLabel();
+		btnRelatorio.setText("Relatórios");
+		btnRelatorio.setOpaque(true);
+		btnRelatorio.setHorizontalAlignment(SwingConstants.CENTER);
+		btnRelatorio.setForeground(Color.DARK_GRAY);
+		btnRelatorio.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnRelatorio.setBackground(Color.WHITE);
+		btnRelatorio.setBounds(121, 426, 458, 31);
+		btnRelatorio.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
-        		mouseEnteredEvent(btnProduto_3);
+        		mouseEnteredEvent(btnRelatorio);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-            	mouseLeftEvent(btnProduto_3);
+            	mouseLeftEvent(btnRelatorio);
             }
         	
 			@Override
@@ -167,8 +168,37 @@ public class MenuPrincipalView extends ViewBase{
 				
 			}
 		});
-		this.add(btnProduto_3);
+		this.add(btnRelatorio);
 		
-		frame.getContentPane().add(this);					
+		
+		JLabel btnUnidade = new JLabel();
+		btnUnidade.setText("Cadastro de Unidade");
+		btnUnidade.setOpaque(true);
+		btnUnidade.setHorizontalAlignment(SwingConstants.CENTER);
+		btnUnidade.setForeground(Color.DARK_GRAY);
+		btnUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnUnidade.setBackground(Color.WHITE);
+		btnUnidade.setBounds(121, 364, 458, 31);
+		btnUnidade.addMouseListener(new MouseAdapter() {
+        	
+        	public void mouseEntered(java.awt.event.MouseEvent evt) {
+        		mouseEnteredEvent(btnUnidade);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+            	mouseLeftEvent(btnUnidade);
+            }
+        	
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
+				UnidadeMedidaView unidadeMedidaView = ApplicationContextProvider.getContext().getBean(UnidadeMedidaView.class);				
+				unidadeMedidaView.frame.setVisible(true);	
+				
+			}
+		});
+		this.add(btnUnidade);
+		
+		frame.getContentPane().add(this);
 	}
 }

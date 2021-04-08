@@ -21,7 +21,7 @@ public class MovimentacaoService {
 	@Autowired
 	ProdutoService produtoService;
 
-	public String validaCamposProduto(MovimentacaoDTO movimentacaoDto) {
+	public String validaCamposMovimentacao(MovimentacaoDTO movimentacaoDto) {
 		StringBuilder errors = new StringBuilder("");
 		
 		errors.append(validaCadastroQuantidade(movimentacaoDto).equals("") ? "" : validaCadastroQuantidade(movimentacaoDto) + "\n");
