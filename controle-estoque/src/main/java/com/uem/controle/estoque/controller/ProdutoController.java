@@ -1,9 +1,12 @@
 package com.uem.controle.estoque.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.uem.controle.estoque.dto.ProdutoDTO;
+import com.uem.controle.estoque.entity.Produto;
 import com.uem.controle.estoque.exception.ExceptionHandler;
 import com.uem.controle.estoque.service.ProdutoService;
 
@@ -31,5 +34,9 @@ public class ProdutoController {
 
 	public void alteraProduto(ProdutoDTO produtoDto) {
 		produtoService.altera(produtoDto);
+	}
+
+	public List<Produto> consultaSaldosPorClasseTotalizandoUnidade() {
+		return produtoService.consultaSaldosPorClasseTotalizandoUnidade();
 	}
 }

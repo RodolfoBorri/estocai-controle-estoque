@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.uem.controle.estoque.dto.ClasseProdutoDTO;
 import com.uem.controle.estoque.dto.UnidadeMedidaDTO;
 
 public class ViewBase extends JPanel {
@@ -45,6 +46,16 @@ public class ViewBase extends JPanel {
 		String descricao = stringSemEspacos.substring(indexSeparador + 1, stringSemEspacos.length());
 		
 		return new UnidadeMedidaDTO(descricao, unidade);
+	}
+	
+	protected ClasseProdutoDTO converteStringEmClasseProdutoDTO(String string) {
+		String stringSemEspacos = string.replaceAll(" ", "");	//removendo espaços
+		int indexSeparador = stringSemEspacos.indexOf("-");
+		
+		String codigo = stringSemEspacos.substring(0, indexSeparador);
+		String descricao = stringSemEspacos.substring(indexSeparador + 1, stringSemEspacos.length());
+		
+		return new ClasseProdutoDTO(descricao, codigo);
 	}
 	
 	protected String atualizaQuantidadeTotalMovimentacao(JTextField textFieldQuantidadeAtual, JTextField textFieldQuantidadeEntrada, String operacao) {

@@ -17,7 +17,11 @@ public enum ExceptionEnum {
 	CE_13("A descrição da unidade deve ser diferente de vazio."),
 	CE_14("Unidade %s já existente!"),
 	CE_15("Unidade %s não encontrada!"),
-	CE_16("Não é possível excluir a unidade %s pois existem produtos referenciando a mesma.");	
+	CE_16("Não é possível excluir a unidade %s pois existem produtos referenciando a mesma."),
+	CE_17("Não é possível excluir a classe de produto %s pois existem produtos referenciando a mesma."),
+	CE_18("Classe de Produto %s já existente!"),	
+	CE_19("A descrição da Classe de Produto deve ser diferente de vazio."),
+	CE_20("Classe de Produto %s não encontrada!");
 	
 	private String codigo;
 

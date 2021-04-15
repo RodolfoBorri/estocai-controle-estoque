@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.uem.controle.estoque.builder.ProdutoBuilder;
+import com.uem.controle.estoque.dto.ClasseProdutoDTO;
 import com.uem.controle.estoque.dto.ProdutoDTO;
 import com.uem.controle.estoque.dto.UnidadeMedidaDTO;
+import com.uem.controle.estoque.entity.ClasseProduto;
 import com.uem.controle.estoque.entity.Produto;
 import com.uem.controle.estoque.entity.UnidadeMedida;
 import com.uem.controle.estoque.enumerator.ExceptionEnum;
@@ -29,9 +30,11 @@ public class ProdutoService {
 	ProdutoRepository produtoRepository;
 	
 	@Autowired
-	UnidadeMedidaService unidadeMedidaService; 
+	UnidadeMedidaService unidadeMedidaService;
 	
-	@Transactional
+	@Autowired
+	ClasseProdutoService classeProdutoService;
+	
 	public void cadastra(ProdutoDTO produtoDto) {
 		try {
 			Produto produto = dtoParaEntidade(produtoDto);
@@ -45,14 +48,20 @@ public class ProdutoService {
 	private UnidadeMedida buscaUnidade(String unidade) {
 		return unidadeMedidaService.buscaEntidadeUnidade(unidade);
 	}
+	
+	private ClasseProduto buscaClasseProduto(String codigo) {
+		return classeProdutoService.buscaEntidadeClasseProduto(Long.parseLong(codigo));
+	}
 
 	private Produto dtoParaEntidade(ProdutoDTO produtoDto) {
 		UnidadeMedida unidade = buscaUnidade(produtoDto.getUnidadeMedida().getUnidade());
+		ClasseProduto classeProduto = buscaClasseProduto(produtoDto.getClasseProduto().getCodigo());
 		
 		Produto produto = new ProdutoBuilder().setNome(produtoDto.getNome())
 											  .setPrecoUnitario(produtoDto.getPrecoUnitario())
 											  .setQuantidadeEstoque(produtoDto.getQuantidadeEstoque())
 											  .setUnidadeMedida(unidade)
+											  .setClasseProduto(classeProduto)
 											  .build();
 		return produto;
 	}
@@ -63,11 +72,15 @@ public class ProdutoService {
 		UnidadeMedidaDTO unidadeMedidaDTO = new UnidadeMedidaDTO(produto.getUnidadeMedida().getDescricao(),
 				produto.getUnidadeMedida().getUnidade());
 		
+		ClasseProdutoDTO classeProdutoDTO = new ClasseProdutoDTO(produto.getClasseProduto().getDescricao(), 
+				produto.getClasseProduto().getId().toString()); 
+		
 		produtoDto.setNome(produto.getNome());
 		produtoDto.setPrecoUnitario(produto.getPreco());
 		produtoDto.setQuantidadeEstoque(produto.getQuantidadeEstoque());
 		produtoDto.setUnidadeMedida(unidadeMedidaDTO);
 		produtoDto.setValorTotalEstoque(produto.getValorTotalEstoque());
+		produtoDto.setClasseProduto(classeProdutoDTO);
 		
 		return produtoDto;
 	}
@@ -109,7 +122,7 @@ public class ProdutoService {
 		String retorno = "";
 
 		try {
-			if(produtoDto.getUnidadeMedida().equals("")) {
+			if(produtoDto.getUnidadeMedida().getUnidade().equals("")) {
 				throw new ExceptionHandler(ExceptionEnum.CE_6, "");
 			}
 		}
@@ -234,5 +247,9 @@ public class ProdutoService {
 			
 			produtoRepository.save(produto);
 		}
+	}
+
+	public List<Produto> consultaSaldosPorClasseTotalizandoUnidade() {
+		return produtoRepository.consultaSaldosPorClasseTotalizandoUnidade();
 	}	
 }

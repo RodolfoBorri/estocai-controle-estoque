@@ -13,6 +13,8 @@ import javax.swing.SwingConstants;
 import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
+import com.uem.controle.estoque.view.classeProduto.ClasseProdutoView;
+import com.uem.controle.estoque.view.consultas.ConsultaView;
 import com.uem.controle.estoque.view.movimentacao.MovimentacaoView;
 import com.uem.controle.estoque.view.produto.ProdutoView;
 import com.uem.controle.estoque.view.reajuste.ReajustePrecoView;
@@ -55,14 +57,14 @@ public class MenuPrincipalView extends ViewBase{
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("Estocaí - Sistema de controle de estoque");
-		frame.setBounds(100, 100, 727, 521);
+		frame.setBounds(100, 100, 727, 640);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		
 		btnProduto = new JLabel();
 		btnProduto.setOpaque(true);
-		btnProduto.setBounds(121, 173, 458, 31);
+		btnProduto.setBounds(121, 305, 458, 31);
 		btnProduto.setBackground(Color.WHITE);
         btnProduto.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18));
         btnProduto.setForeground(Color.DARK_GRAY);
@@ -94,7 +96,7 @@ public class MenuPrincipalView extends ViewBase{
 		btnMovimentacao.setForeground(Color.DARK_GRAY);
 		btnMovimentacao.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
 		btnMovimentacao.setBackground(Color.WHITE);
-		btnMovimentacao.setBounds(121, 238, 458, 31);
+		btnMovimentacao.setBounds(121, 367, 458, 31);
 		btnMovimentacao.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -122,7 +124,7 @@ public class MenuPrincipalView extends ViewBase{
 		btnReajuste.setForeground(Color.DARK_GRAY);
 		btnReajuste.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
 		btnReajuste.setBackground(Color.WHITE);
-		btnReajuste.setBounds(121, 300, 458, 31);
+		btnReajuste.setBounds(121, 428, 458, 31);
 		btnReajuste.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -149,7 +151,7 @@ public class MenuPrincipalView extends ViewBase{
 		btnRelatorio.setForeground(Color.DARK_GRAY);
 		btnRelatorio.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
 		btnRelatorio.setBackground(Color.WHITE);
-		btnRelatorio.setBounds(121, 426, 458, 31);
+		btnRelatorio.setBounds(121, 487, 458, 31);
 		btnRelatorio.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -178,7 +180,7 @@ public class MenuPrincipalView extends ViewBase{
 		btnUnidade.setForeground(Color.DARK_GRAY);
 		btnUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
 		btnUnidade.setBackground(Color.WHITE);
-		btnUnidade.setBounds(121, 364, 458, 31);
+		btnUnidade.setBounds(121, 241, 458, 31);
 		btnUnidade.addMouseListener(new MouseAdapter() {
         	
         	public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -200,5 +202,62 @@ public class MenuPrincipalView extends ViewBase{
 		this.add(btnUnidade);
 		
 		frame.getContentPane().add(this);
+		
+		JLabel btnClasseProduto = new JLabel();
+		btnClasseProduto.setText("Cadastro Classe Produto");
+		btnClasseProduto.setOpaque(true);
+		btnClasseProduto.setHorizontalAlignment(SwingConstants.CENTER);
+		btnClasseProduto.setForeground(Color.DARK_GRAY);
+		btnClasseProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnClasseProduto.setBackground(Color.WHITE);
+		btnClasseProduto.setBounds(121, 176, 458, 31);
+		btnClasseProduto.addMouseListener(new MouseAdapter() {
+        	
+        	public void mouseEntered(java.awt.event.MouseEvent evt) {
+        		mouseEnteredEvent(btnClasseProduto);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+            	mouseLeftEvent(btnClasseProduto);
+            }
+        	
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
+				ClasseProdutoView classeProdutoView = ApplicationContextProvider.getContext().getBean(ClasseProdutoView.class);				
+				classeProdutoView.frame.setVisible(true);	
+				
+			}
+		});
+		this.add(btnClasseProduto);
+		
+		JLabel btnConsultas = new JLabel();
+		btnConsultas.setText("Consultas");
+		btnConsultas.setOpaque(true);
+		btnConsultas.setHorizontalAlignment(SwingConstants.CENTER);
+		btnConsultas.setForeground(Color.DARK_GRAY);
+		btnConsultas.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+		btnConsultas.setBackground(Color.WHITE);
+		btnConsultas.setBounds(121, 545, 458, 31);
+		btnConsultas.addMouseListener(new MouseAdapter() {
+        	
+        	public void mouseEntered(java.awt.event.MouseEvent evt) {
+        		mouseEnteredEvent(btnConsultas);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+            	mouseLeftEvent(btnConsultas);
+            }
+        	
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
+				ConsultaView consultaView = ApplicationContextProvider.getContext().getBean(ConsultaView.class);				
+				consultaView.frame.setVisible(true);	
+				
+			}
+		});
+		
+		add(btnConsultas);
 	}
 }

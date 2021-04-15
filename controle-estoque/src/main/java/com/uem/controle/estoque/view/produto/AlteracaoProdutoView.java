@@ -31,8 +31,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.uem.controle.estoque.ApplicationContextProvider;
+import com.uem.controle.estoque.controller.ClasseProdutoController;
 import com.uem.controle.estoque.controller.ProdutoController;
 import com.uem.controle.estoque.controller.UnidadeMedidaController;
+import com.uem.controle.estoque.dto.ClasseProdutoDTO;
 import com.uem.controle.estoque.dto.ProdutoDTO;
 import com.uem.controle.estoque.dto.UnidadeMedidaDTO;
 import com.uem.controle.estoque.enumerator.ExceptionEnum;
@@ -49,13 +51,15 @@ public class AlteracaoProdutoView extends ViewBase {
 	
 	@Autowired
 	UnidadeMedidaController unidadeController;	
+	
+	@Autowired	
+	ClasseProdutoController classeProdutoController;
 
 	public JFrame frame;
 	private JTextField textFieldNome;
 	private JTextField textFieldPreco;
 	private JTextField textFieldQuantidade;
-	private JTextField textFieldValorTotal;
-	private JLabel lblNome;
+	private JTextField textFieldValor;
 	private JLabel lblPreco;
 	private JLabel lblCifrao2;
 	private JLabel lblUnidade;
@@ -63,12 +67,16 @@ public class AlteracaoProdutoView extends ViewBase {
 	private JLabel lblValorTotal;
 	private JLabel lblCifrao;
 	private JLabel btnConfirmar;
+	private JLabel lbl_classeProduto;
 	private JSeparator separator1;
 	private JSeparator separator2;
 	private JSeparator separator3;
 	private JSeparator separator4;	
+	private JSeparator separator5;
 	private JComboBox<UnidadeMedidaDTO> comboBoxUnidade;
+	private JComboBox<ClasseProdutoDTO> comboBoxClasseProduto;
 	private List<UnidadeMedidaDTO> unidades;
+	private List<ClasseProdutoDTO> classesProduto;	
 
 	
 	public static void run() {
@@ -92,16 +100,18 @@ public class AlteracaoProdutoView extends ViewBase {
 		separator2.setFocusable(podeEditar);
 		separator3.setFocusable(podeEditar);
 		separator4.setFocusable(podeEditar);
+		separator5.setFocusable(podeEditar);
 		textFieldNome.setEditable(!podeEditar);	//Não pode-se alterar o nome
 		textFieldPreco.setEditable(podeEditar);
 		textFieldQuantidade.setEditable(podeEditar);
-		textFieldValorTotal.setEditable(false);		//Não pode-se alterar o valorTotal
+		textFieldValor.setEditable(false);		//Não pode-se alterar o valorTotal
 		lblPreco.setFocusable(podeEditar);
 		lblCifrao2.setFocusable(podeEditar);
 		lblUnidade.setFocusable(podeEditar);
 		lblQuantidade.setFocusable(podeEditar);
 		lblValorTotal.setFocusable(podeEditar);
 		lblCifrao.setFocusable(podeEditar);
+		lbl_classeProduto.setFocusable(podeEditar);
 		btnConfirmar.setFocusable(podeEditar);
 	}
 
@@ -115,7 +125,7 @@ public class AlteracaoProdutoView extends ViewBase {
 	}
 	
 	@PostConstruct
-	private void preencheComboBox() throws UnsupportedLookAndFeelException {	//é preciso instanciar depois o comboBox para
+	private void preencheComboBoxUnidade() throws UnsupportedLookAndFeelException {	//é preciso instanciar depois o comboBox para
 		unidades = unidadeController.buscaTodasUnidades();					   //pegar a instancia do controller
 		
 		comboBoxUnidade = new JComboBox(unidades.toArray());
@@ -125,9 +135,25 @@ public class AlteracaoProdutoView extends ViewBase {
 		comboBoxUnidade.setForeground(Color.BLACK);
 		comboBoxUnidade.setBorder(new EmptyBorder(0, 0, 0, 0));		
 		comboBoxUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		comboBoxUnidade.setBounds(180, 254, 155, 41);
+		comboBoxUnidade.setBounds(180, 306, 155, 41);
 		
 		this.add(comboBoxUnidade);
+	}
+	
+	@PostConstruct
+	private void preencheComboBoxClasseProduto() throws UnsupportedLookAndFeelException {	
+		classesProduto = classeProdutoController.buscaTodasClassesProduto();					   
+		
+		comboBoxClasseProduto = new JComboBox(classesProduto.toArray());
+		comboBoxClasseProduto.setBackground(Color.WHITE);
+		comboBoxClasseProduto.setVisible(false);
+		comboBoxClasseProduto.setOpaque(false);
+		comboBoxClasseProduto.setForeground(Color.BLACK);
+		comboBoxClasseProduto.setBorder(new EmptyBorder(0, 0, 0, 0));		
+		comboBoxClasseProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		comboBoxClasseProduto.setBounds(180, 206, 155, 41);
+		
+		this.add(comboBoxClasseProduto);
 	}
 
 	private void initialize() {
@@ -142,7 +168,7 @@ public class AlteracaoProdutoView extends ViewBase {
 		});
 		frame.setResizable(false);
 		frame.setTitle("Estocaí - Sistema de controle de estoque");
-		frame.setBounds(100, 100, 727, 521);
+		frame.setBounds(100, 100, 727, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
@@ -154,7 +180,7 @@ public class AlteracaoProdutoView extends ViewBase {
 		btnConfirmar.setForeground(Color.DARK_GRAY);
 		btnConfirmar.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
 		btnConfirmar.setBackground(Color.WHITE);
-		btnConfirmar.setBounds(58, 430, 256, 31);
+		btnConfirmar.setBounds(58, 500, 256, 31);
 		btnConfirmar.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -198,7 +224,7 @@ public class AlteracaoProdutoView extends ViewBase {
 		btnCancelar.setForeground(Color.DARK_GRAY);
 		btnCancelar.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
 		btnCancelar.setBackground(Color.WHITE);
-		btnCancelar.setBounds(410, 430, 256, 31);
+		btnCancelar.setBounds(410, 500, 256, 31);
 		btnCancelar.addMouseListener(new MouseAdapter() {
 
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -223,13 +249,13 @@ public class AlteracaoProdutoView extends ViewBase {
 
 		frame.getContentPane().add(this);
 
-		lblNome = new JLabel("Nome: ");
+		JLabel lblNome = new JLabel("Nome: ");
 		lblNome.setForeground(SystemColor.inactiveCaptionBorder);
 		lblNome.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		lblNome.setBounds(115, 166, 59, 25);
 		add(lblNome);
-
-		textFieldNome = new JTextField("");
+		
+		textFieldNome = new JTextField();
 		textFieldNome.setCaretColor(new Color(240, 242, 245));
 		textFieldNome.setBorder(null);
 		textFieldNome.setOpaque(false);
@@ -239,65 +265,65 @@ public class AlteracaoProdutoView extends ViewBase {
 		textFieldNome.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textFieldNome.setColumns(10);
 		this.add(textFieldNome);
-
+		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(180, 189, 369, 2);
 		add(separator);
-
+		
 		lblPreco = new JLabel("Preço: ");
 		lblPreco.setForeground(SystemColor.inactiveCaptionBorder);
 		lblPreco.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblPreco.setBounds(115, 216, 59, 25);
+		lblPreco.setBounds(115, 268, 59, 25);
 		add(lblPreco);
-
-		textFieldPreco = new JTextField("");
+		
+		textFieldPreco = new JTextField();
 		textFieldPreco.setCaretColor(new Color(240, 242, 245));
 		textFieldPreco.setBorder(null);
 		textFieldPreco.setOpaque(false);
 		textFieldPreco.setForeground(new Color(240, 242, 245));
 		textFieldPreco.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textFieldPreco.setBounds(180, 206, 134, 40);
+		textFieldPreco.setBounds(180, 258, 134, 40);
 		textFieldPreco.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textFieldPreco.setColumns(10);
 		textFieldPreco.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				textFieldValorTotal.setText(atualizaValorTotal(textFieldQuantidade, textFieldPreco));
+				textFieldValor.setText(atualizaValorTotal(textFieldQuantidade, textFieldPreco));
 			}
 		});
 		this.add(textFieldPreco);
-
+		
 		separator1 = new JSeparator();
-		separator1.setBounds(180, 239, 134, 2);
+		separator1.setBounds(180, 291, 134, 2);
 		add(separator1);
-
+		
 		lblCifrao2 = new JLabel("R$: ");
 		lblCifrao2.setForeground(SystemColor.inactiveCaptionBorder);
 		lblCifrao2.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
-		lblCifrao2.setBounds(166, 219, 16, 25);
+		lblCifrao2.setBounds(166, 271, 16, 25);
 		add(lblCifrao2);
-
+		
 		lblUnidade = new JLabel("Unidade: ");
 		lblUnidade.setForeground(SystemColor.inactiveCaptionBorder);
 		lblUnidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblUnidade.setBounds(96, 268, 78, 25);
+		lblUnidade.setBounds(96, 320, 78, 25);
 		add(lblUnidade);
-
+		
 		separator2 = new JSeparator();
-		separator2.setBounds(180, 291, 134, 2);
-		add(separator2);
-
+		separator2.setBounds(180, 343, 134, 2);
+		add(separator2);		
+		
 		lblQuantidade = new JLabel("Quantidade: ");
 		lblQuantidade.setForeground(SystemColor.inactiveCaptionBorder);
 		lblQuantidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblQuantidade.setBounds(78, 320, 96, 25);
+		lblQuantidade.setBounds(78, 372, 96, 25);
 		add(lblQuantidade);
-
-		textFieldQuantidade = new JTextField("");
+		
+		textFieldQuantidade = new JTextField();
 		textFieldQuantidade.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				textFieldValorTotal.setText(atualizaValorTotal(textFieldQuantidade, textFieldPreco));
+				textFieldValor.setText(atualizaValorTotal(textFieldQuantidade, textFieldPreco));
 			}
 		});
 		textFieldQuantidade.setCaretColor(new Color(240, 242, 245));
@@ -305,42 +331,52 @@ public class AlteracaoProdutoView extends ViewBase {
 		textFieldQuantidade.setOpaque(false);
 		textFieldQuantidade.setForeground(new Color(240, 242, 245));
 		textFieldQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textFieldQuantidade.setBounds(180, 310, 134, 40);
+		textFieldQuantidade.setBounds(180, 362, 134, 40);
 		textFieldQuantidade.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
 		textFieldQuantidade.setColumns(10);
 		this.add(textFieldQuantidade);
-
+		
 		separator3 = new JSeparator();
-		separator3.setBounds(180, 343, 134, 2);		
+		separator3.setBounds(180, 395, 134, 2);
 		add(separator3);
-
+		
 		lblValorTotal = new JLabel("Valor Total: ");
 		lblValorTotal.setForeground(SystemColor.inactiveCaptionBorder);
 		lblValorTotal.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		lblValorTotal.setBounds(78, 372, 96, 25);
+		lblValorTotal.setBounds(78, 424, 96, 25);
 		add(lblValorTotal);
 		
 		lblCifrao = new JLabel("R$: ");
 		lblCifrao.setForeground(SystemColor.inactiveCaptionBorder);
 		lblCifrao.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 10));
-		lblCifrao.setBounds(166, 375, 16, 25);
+		lblCifrao.setBounds(166, 427, 16, 25);
 		add(lblCifrao);
-
-		textFieldValorTotal = new JTextField("");
-		textFieldValorTotal.setCaretColor(new Color(240, 242, 245));
-		textFieldValorTotal.setBorder(null);
-		textFieldValorTotal.setOpaque(false);
-		textFieldValorTotal.setEditable(false);
-		textFieldValorTotal.setForeground(new Color(240, 242, 245));
-		textFieldValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textFieldValorTotal.setBounds(180, 362, 134, 31);
-		textFieldValorTotal.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-		textFieldValorTotal.setColumns(10);
-		this.add(textFieldValorTotal);
-
+		
+		textFieldValor = new JTextField();
+		textFieldValor.setCaretColor(new Color(240, 242, 245));
+		textFieldValor.setBorder(null);
+		textFieldValor.setOpaque(false);
+		textFieldValor.setEditable(false);
+		textFieldValor.setForeground(new Color(240, 242, 245));
+		textFieldValor.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textFieldValor.setBounds(180, 414, 134, 40);
+		textFieldValor.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		textFieldValor.setColumns(10);
+		this.add(textFieldValor);
+		
 		separator4 = new JSeparator();
-		separator4.setBounds(180, 395, 134, 2);
-		add(separator4);
+		separator4.setBounds(180, 447, 134, 2);
+		this.add(separator4);
+		
+		lbl_classeProduto = new JLabel("Classe de Produto: ");
+		lbl_classeProduto.setForeground(SystemColor.inactiveCaptionBorder);
+		lbl_classeProduto.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
+		lbl_classeProduto.setBounds(33, 214, 134, 25);
+		this.add(lbl_classeProduto);
+		
+		separator5 = new JSeparator();
+		separator5.setBounds(180, 243, 134, 2);
+		this.add(separator5);
 
 		JLabel btnBuscaProduto = new JLabel();
 		btnBuscaProduto.setText("Buscar");
@@ -378,6 +414,7 @@ public class AlteracaoProdutoView extends ViewBase {
 			ProdutoDTO produtoDto = produtoController.buscaProdutoPorNome(nomeProduto);
 			preencheCamposProdutoTela(produtoDto);
 			comboBoxUnidade.setVisible(true);
+			comboBoxClasseProduto.setVisible(true);
 			mudaEnabledCampos(true);
 		}
 		catch(Exception ex)
@@ -385,6 +422,7 @@ public class AlteracaoProdutoView extends ViewBase {
 			esvaziaCamposProdutoTela();
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO!", JOptionPane.WARNING_MESSAGE);
 			comboBoxUnidade.setVisible(false);
+			comboBoxClasseProduto.setVisible(false);
 			mudaEnabledCampos(false);
 		}
 	}
@@ -392,15 +430,17 @@ public class AlteracaoProdutoView extends ViewBase {
 	private void esvaziaCamposProdutoTela() {
 		textFieldPreco.setText("");
 		comboBoxUnidade.getModel().setSelectedItem("");
+		comboBoxClasseProduto.getModel().setSelectedItem("");
 		textFieldQuantidade.setText("");
-		textFieldValorTotal.setText("");
+		textFieldValor.setText("");
 	}
 
 	private void preencheCamposProdutoTela(ProdutoDTO produto) {
 		textFieldPreco.setText(produto.getPrecoUnitario().toString());
 		comboBoxUnidade.getModel().setSelectedItem(produto.getUnidadeMedida());
+		comboBoxClasseProduto.getModel().setSelectedItem(produto.getClasseProduto());
 		textFieldQuantidade.setText(produto.getQuantidadeEstoque().toString());
-		textFieldValorTotal.setText(produto.getValorTotalEstoque().toString());
+		textFieldValor.setText(produto.getValorTotalEstoque().toString());
 	}
 	
 	private String validaInsercao(ProdutoDTO produtoDto) {
@@ -410,6 +450,7 @@ public class AlteracaoProdutoView extends ViewBase {
 	private ProdutoDTO converteCamposParaDto() {
 		String nome;
 		UnidadeMedidaDTO unidade;
+		ClasseProdutoDTO classeProduto;
 		int quantidade;
 		BigDecimal preco, valorTotalEstoque;
 
@@ -417,9 +458,10 @@ public class AlteracaoProdutoView extends ViewBase {
 			nome = textFieldNome.getText();
 			preco = new BigDecimal(textFieldPreco.getText());
 			unidade = converteStringEmUnidadeDTO(comboBoxUnidade.getSelectedItem().toString());
+			classeProduto = converteStringEmClasseProdutoDTO(comboBoxClasseProduto.getSelectedItem().toString());
 			quantidade = Integer.parseInt(textFieldQuantidade.getText());
 			valorTotalEstoque = preco.multiply(new BigDecimal(quantidade));
-			return new ProdutoDTO(nome, preco, unidade, quantidade, valorTotalEstoque);
+			return new ProdutoDTO(nome, preco, unidade, quantidade, valorTotalEstoque, classeProduto);
 			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, ExceptionEnum.CE_9.getCodigo(), "ERRO!", JOptionPane.WARNING_MESSAGE);
